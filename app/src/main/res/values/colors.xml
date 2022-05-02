@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="toolbarTransparent">#00FFFFFF</color>
     <color name="main_app_color">#070723</color>
+    <color name="home_card_color">#1C85E6</color>
+    <color name="secondary_main_color">#141335</color>
+    <color name="custom_grey">#959494</color>
 </resources>

@@ -6,15 +6,19 @@
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/drawable/cloud.xml" value="0.32222222222222224" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/drawable/favorite.xml" value="0.32222222222222224" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/drawable/home_background_oval.xml" value="0.16018518518518518" />
+        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/drawable/home_gradient_card.xml" value="0.21822916666666667" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/drawable/setting.xml" value="0.32222222222222224" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/drawable/transition_home.xml" value="0.16018518518518518" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/activity_main.xml" value="0.27807971014492755" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/activity_splash_screen.xml" value="0.18" />
+        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/all_week_temp_custom_cell.xml" value="0.22" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/fragment_alarm.xml" value="0.12962962962962962" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/fragment_favorites.xml" value="0.12962962962962962" />
-        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/fragment_home.xml" value="0.12962962962962962" />
+        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/fragment_setting.xml" value="0.12962962962962962" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/main_toolbar.xml" value="0.1" />
+        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/today_temp_by_hours_custom_cell.xml" value="0.20572916666666666" />
+        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/today_temp_hours_custom_cell.xml" value="0.20572916666666666" />
       </map>
     </option>
   </component>
