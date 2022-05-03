@@ -1,14 +1,21 @@
 package iti.mad42.weathery.home.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import iti.mad42.weathery.databinding.FragmentHomeBinding
+import iti.mad42.weathery.model.network.RemoteDataSource
+import iti.mad42.weathery.model.network.RemoteSourceInterface
+import iti.mad42.weathery.model.pojo.Repository
+import iti.mad42.weathery.model.pojo.RepositoryInterface
 import iti.mad42.weathery.model.pojo.TodayHoursTemp
+import kotlinx.coroutines.*
 
 
 class HomeFragment : Fragment() {
@@ -16,6 +23,7 @@ class HomeFragment : Fragment() {
     private lateinit var todayHoursAdapter : TodayTempHoursAdapter
     private lateinit var weekTempAdapter: WeekTempAdapter
     lateinit var hoursList : ArrayList<TodayHoursTemp>
+    lateinit var repo : RepositoryInterface
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +34,9 @@ class HomeFragment : Fragment() {
         hoursList.add(TodayHoursTemp("05:00 PM", "26 ℃", "Monday"))
         hoursList.add(TodayHoursTemp("06:00 PM", "27 ℃", "Tuesday"))
         hoursList.add(TodayHoursTemp("07:00 PM", "29 ℃", "Wednesday"))
+
+        repo = Repository.getInstance(RemoteDataSource.getInstance(), context)
+        getAllTemp()
     }
 
     override fun onCreateView(
@@ -65,4 +76,13 @@ class HomeFragment : Fragment() {
         }
     }
 
+    fun getAllTemp(){
+        var job : Job? = null
+        lifecycle.coroutineScope.launch {
+            job = CoroutineScope(Dispatchers.IO).launch {
+                var weatherPojo = repo.getCurrentTempData()
+                Log.i("sandra", "getAllTemp: main timezone ${weatherPojo?.current?.temp}")
+            }
+        }
+    }
 }
