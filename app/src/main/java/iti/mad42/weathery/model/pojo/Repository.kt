@@ -16,8 +16,8 @@ class Repository private constructor(
         }
     }
 
-    override suspend fun getCurrentTempData(): WeatherPojo? {
-        Log.i("sandra", "getCurrentTempData: repo : ${remoteSource.getCurrentTempData()?.timezone}")
-        return remoteSource.getCurrentTempData()
+    override suspend fun getCurrentTempData(): WeatherPojo {
+        Log.i("sandra", "getCurrentTempData: repo : ${remoteSource.getCurrentTempData(context!!).timezone}")
+        return remoteSource.getCurrentTempData(context!!)
     }
 }

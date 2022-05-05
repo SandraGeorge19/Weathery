@@ -2,16 +2,24 @@ package iti.mad42.weathery.home.view
 
 import android.content.Context
 import android.opengl.Visibility
+import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import iti.mad42.weathery.R
 import iti.mad42.weathery.databinding.TodayTempHoursCustomCellBinding
+import iti.mad42.weathery.model.pojo.CurrentWeather
 import iti.mad42.weathery.model.pojo.TodayHoursTemp
+import iti.mad42.weathery.model.pojo.Utility
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.util.*
 
 class TodayTempHoursAdapter(
-    var hoursList: List<TodayHoursTemp>,
+    var hoursList: List<CurrentWeather>,
     var context: Context?,
 ) : RecyclerView.Adapter<TodayTempHoursAdapter.ViewHolder>(){
 
@@ -33,12 +41,14 @@ class TodayTempHoursAdapter(
         return viewHolder
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: TodayTempHoursAdapter.ViewHolder, position: Int) {
         with(holder){
-            binding.hourTxt.text = hoursList[position].hour
-            binding.hourTempDegreeTxt.text = hoursList[position].degree
+            binding.hourTxt.text = Utility.timeStampToHour(hoursList[position].dt)
+            binding.hourTempDegreeTxt.text = "${hoursList[position].temp.toInt()} ℃"
             binding.hourTempStatusIcon.setImageResource(R.drawable.clear_sky)
-            if(!hoursList[position].hour.equals("02:00 PM")){
+            Log.i("san", "onBindViewHolder: ${Utility.timeStampToHourOneNumber(hoursList[position].dt)} and locale : ${LocalDateTime.now().hour.minus(12).toLong()}")
+            if(Utility.timeStampToHourOneNumber(hoursList[position].dt) != LocalDateTime.now().hour.minus(12).toString()){
                 binding.gradientColorForTodayHour.visibility = View.GONE
             }
         }

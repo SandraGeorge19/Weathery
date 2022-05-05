@@ -17,6 +17,6 @@ data class DailyWeather(
     val windGust: Double,
     val weather: List<WeatherDetails>,
     val clouds: Long,
-    val pop: Long,
+    val pop: Float,
     val uvi: Double
 )
