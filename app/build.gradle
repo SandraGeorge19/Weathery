@@ -52,6 +52,9 @@ dependencies {
     implementation "com.airbnb.android:lottie:2.8.0"
     implementation 'com.github.MatteoBattilana:WeatherView:3.0.0'
 
+    //Location
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
+
     //Coroutines
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'

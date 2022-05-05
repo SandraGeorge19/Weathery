@@ -16,5 +16,5 @@ data class CurrentWeather(
     val windDeg: Long,
     val windGust: Double,
     val weather: List<WeatherDetails>,
-    val pop: Long? = null
+    val pop: Float? = null
 )
