@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import iti.mad42.weathery.R
 import iti.mad42.weathery.databinding.FavoiteScreenCustomCellBinding
+import iti.mad42.weathery.model.pojo.FavoriteWeather
 import iti.mad42.weathery.model.pojo.TodayHoursTemp
 
 class FavoriteLocationAdapter(
-    var favLocationList : List<TodayHoursTemp>,
+    var favLocationList : List<FavoriteWeather>,
     var context: Context?
 ) : RecyclerView.Adapter<FavoriteLocationAdapter.ViewHolder>(){
 
@@ -31,7 +32,7 @@ class FavoriteLocationAdapter(
 
     override fun onBindViewHolder(holder: FavoriteLocationAdapter.ViewHolder, position: Int) {
         with(holder){
-            holder.binding.favLocationNameTxt.text = favLocationList[position].day
+            holder.binding.favLocationNameTxt.text = favLocationList[position].favLocationName
             holder.binding.favLocationStatusIcon.setImageResource(R.drawable.clear_sky)
         }
     }

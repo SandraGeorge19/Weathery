@@ -1,24 +1,22 @@
-package iti.mad42.weathery.model.pojo
+package iti.mad42.weathery.model.db
 
 import androidx.lifecycle.LiveData
-import iti.mad42.weathery.model.network.RemoteSourceInterface
+import iti.mad42.weathery.model.pojo.AlarmPojo
+import iti.mad42.weathery.model.pojo.FavoriteWeather
+import iti.mad42.weathery.model.pojo.WeatherPojo
 
-interface RepositoryInterface {
-    // Retrofit Functions
-    suspend fun getCurrentTempData() : WeatherPojo
+interface LocalDataSourceInterface {
 
-    //LocalDataBase Functions
-    //weatherPojo fun
+    //WeatherResponse methods
     val getWeatherPojo : LiveData<WeatherPojo>
 
-    //weatherFavorite fun
+    //FavoriteWeather methods
     val getAllFavoriteWeathers : LiveData<List<FavoriteWeather>>
     fun addWeatherToFav(favoriteWeather: FavoriteWeather)
     fun deleteWeatherFromFav(favoriteWeather: FavoriteWeather)
 
-    //alarm fun
+    //Alarm methods
     val allAlarmsList : LiveData<List<AlarmPojo>>
     fun insertAlarm(alarmPojo: AlarmPojo)
     fun deleteAlarm(alarmPojo: AlarmPojo)
-
 }

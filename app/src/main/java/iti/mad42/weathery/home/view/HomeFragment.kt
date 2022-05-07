@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import iti.mad42.weathery.databinding.FragmentHomeBinding
 import iti.mad42.weathery.home.viewmodel.HomeViewModel
 import iti.mad42.weathery.home.viewmodel.HomeViewModelFactory
+import iti.mad42.weathery.model.db.ConcreteLocalDataSource
 import iti.mad42.weathery.model.network.RemoteDataSource
 import iti.mad42.weathery.model.network.RemoteSourceInterface
 import iti.mad42.weathery.model.pojo.*
@@ -31,21 +32,11 @@ class HomeFragment : Fragment() {
     private lateinit var weekTempAdapter: WeekTempAdapter
     lateinit var homeViewModelFactory: HomeViewModelFactory
     lateinit var homeViewModel: HomeViewModel
-//    lateinit var hoursList : ArrayList<TodayHoursTemp>
-//    lateinit var repo : RepositoryInterface
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        hoursList = ArrayList<TodayHoursTemp>()
-//        hoursList.add(TodayHoursTemp("02:00 PM", "23 ℃", "Friday"))
-//        hoursList.add(TodayHoursTemp("03:00 PM", "24 ℃", "Saturday"))
-//        hoursList.add(TodayHoursTemp("04:00 PM", "25 ℃", "Sunday"))
-//        hoursList.add(TodayHoursTemp("05:00 PM", "26 ℃", "Monday"))
-//        hoursList.add(TodayHoursTemp("06:00 PM", "27 ℃", "Tuesday"))
-//        hoursList.add(TodayHoursTemp("07:00 PM", "29 ℃", "Wednesday"))
-//
-//        repo = Repository.getInstance(RemoteDataSource.getInstance(), context)
-//        getAllTemp()
+
     }
 
     override fun onCreateView(
@@ -87,7 +78,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initFactoryAndViewModel(){
-        homeViewModelFactory = HomeViewModelFactory(Repository.getInstance(RemoteDataSource.getInstance(), context))
+        homeViewModelFactory = HomeViewModelFactory(Repository.getInstance(RemoteDataSource.getInstance(), ConcreteLocalDataSource(requireContext()) ,requireContext()))
         homeViewModel = ViewModelProvider(requireActivity(), homeViewModelFactory).get(HomeViewModel::class.java)
     }
 
@@ -128,11 +119,11 @@ class HomeFragment : Fragment() {
         binding.homeDate.text = Utility.timeStampToDate(weatherPojo.current.dt)
         Log.i("Sandra", "getTodayTemp: ${weatherPojo.current.dt}")
         binding.todayTempDegreeTxt.text = "${weatherPojo.current.temp.toInt().toString()} ℃"
-        //binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description.name
-//        if(weatherPojo.current.weather[0].description.name != null){
+        binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
+//        if(weatherPojo.current.weather[0].description.value != null){
 //            binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description.name
 //        }else{
-//            binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].main.name
+//            binding.todayTempStatusTxt.text = "DDDDD"
 //        }
         binding.pressureValueTxt.text = weatherPojo.current.pressure.toString()
         binding.humidityValueTxt.text = "${weatherPojo.current.humidity} %"

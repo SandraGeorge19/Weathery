@@ -5,10 +5,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Utility {
+    //api key map
+    //AIzaSyBDIon-VAldKAVRgh_V5MGSBgi1_NYNO9E
     companion object{
         val sharedPrefKey : String = "LatLong"
         val GPSLatKey : String = "GPSLat"
         val GPSLongKey : String = "GPSLong"
+        val ERROR_DIALOG_REQUEST = 5555
 
         fun timeStampToDate (dt : Long) : String{
             var date : Date = Date(dt * 1000)

@@ -48,8 +48,14 @@ class TodayTempHoursAdapter(
             binding.hourTempDegreeTxt.text = "${hoursList[position].temp.toInt()} ℃"
             binding.hourTempStatusIcon.setImageResource(R.drawable.clear_sky)
             Log.i("san", "onBindViewHolder: ${Utility.timeStampToHourOneNumber(hoursList[position].dt)} and locale : ${LocalDateTime.now().hour.minus(12).toLong()}")
-            if(Utility.timeStampToHourOneNumber(hoursList[position].dt) != LocalDateTime.now().hour.minus(12).toString()){
-                binding.gradientColorForTodayHour.visibility = View.GONE
+            if(LocalDateTime.now().hour > 12) {
+                if (Utility.timeStampToHourOneNumber(hoursList[position].dt) != LocalDateTime.now().hour.minus(12).toString()) {
+                    binding.gradientColorForTodayHour.visibility = View.GONE
+                }
+            }else{
+                if (Utility.timeStampToHourOneNumber(hoursList[position].dt) != LocalDateTime.now().hour.toString()) {
+                    binding.gradientColorForTodayHour.visibility = View.GONE
+                }
             }
         }
     }

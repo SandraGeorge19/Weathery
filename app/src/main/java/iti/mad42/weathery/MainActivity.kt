@@ -1,6 +1,7 @@
 package iti.mad42.weathery
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -10,13 +11,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.gauravk.bubblenavigation.BubbleNavigationLinearView
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.*
 import iti.mad42.weathery.alarms.view.AlarmFragment
 import iti.mad42.weathery.favourites.view.FavoritesFragment
 import iti.mad42.weathery.home.view.HomeFragment
+import iti.mad42.weathery.model.pojo.Utility
 import iti.mad42.weathery.settings.view.SettingFragment
 
 class MainActivity : AppCompatActivity() {
