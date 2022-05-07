@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -54,6 +55,9 @@ dependencies {
 
     //Location
     implementation 'com.google.android.gms:play-services-location:19.0.1'
+
+    //Google Maps
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
 
     //Coroutines
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
