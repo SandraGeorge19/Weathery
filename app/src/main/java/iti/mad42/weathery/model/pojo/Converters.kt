@@ -58,10 +58,12 @@ class Converters {
     }
 
     //convert from / to weatherDetails
+    @TypeConverter
     fun fromWeatherDetailsListToString(weatherDetailsList: List<WeatherDetails>) : String{
         return gson.toJson(weatherDetailsList)
     }
 
+    @TypeConverter
     fun fromStringToWeatherDetailsList(weatherDetailsListString: String) : List<WeatherDetails>{
         if(weatherDetailsListString == null){
             return Collections.emptyList()
@@ -72,29 +74,51 @@ class Converters {
     }
 
     //convert from / to favouriteWeather
+    @TypeConverter
     fun fromFavoriteWeatherToString(favoriteWeather: FavoriteWeather) : String{
         return gson.toJson(favoriteWeather)
     }
 
+    @TypeConverter
     fun fromStringToFavoriteWeather(favoriteWeatherString: String) : FavoriteWeather{
         return gson.fromJson(favoriteWeatherString, FavoriteWeather::class.java)
     }
 
     //convert from / to tempAllDay
+    @TypeConverter
     fun fromTempAllDayToString(tempAllDay: TempAllDay) : String{
         return gson.toJson(tempAllDay)
     }
 
+    @TypeConverter
     fun fromStringToTempAllDay(tempAllDayString: String) : TempAllDay{
         return gson.fromJson(tempAllDayString, TempAllDay::class.java)
     }
 
     //convert from / to temp
+    @TypeConverter
     fun fromTempToString(temp: Temp) : String{
         return gson.toJson(temp)
     }
 
+    @TypeConverter
     fun fromStringToTemp(tempString: String) : Temp{
         return gson.fromJson(tempString, Temp::class.java)
+    }
+
+    //covert from / to alerts
+    @TypeConverter
+    fun fromAlertToString(alertList: List<Alert>?) : String{
+        return gson.toJson(alertList)
+    }
+
+    @TypeConverter
+    fun fromStringToAlert(alertListString: String) : List<Alert>?{
+        if(alertListString == null){
+            return Collections.emptyList()
+        }else{
+            var list = object : TypeToken<List<Alert?>?>(){}.type
+            return gson.fromJson(alertListString, list)
+        }
     }
 }

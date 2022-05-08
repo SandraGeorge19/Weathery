@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +33,7 @@ class HomeFragment : Fragment() {
     private lateinit var weekTempAdapter: WeekTempAdapter
     lateinit var homeViewModelFactory: HomeViewModelFactory
     lateinit var homeViewModel: HomeViewModel
+    lateinit var localWeather: WeatherPojo
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,11 +85,24 @@ class HomeFragment : Fragment() {
     }
 
     fun getCurrentWeather(){
+        var languageShared : SharedPreferences = requireContext().getSharedPreferences("Language", AppCompatActivity.MODE_PRIVATE)
+        var unitsShared : SharedPreferences = requireContext().getSharedPreferences("Units", AppCompatActivity.MODE_PRIVATE)
+
         homeViewModel.weatherPojo.observe(requireActivity()){
             if(it != null){
                 updateUIWithWeatherData(it)
+                var s = unitsShared.getString("Temp","metric")!!
+                var d =  languageShared.getString("Lang", "en")!!
+                Log.e("sandra", "getCurrentWeather: temp is : $s lang is: $d", )
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.e("d", "onResume: iiiiii", )
+        initFactoryAndViewModel()
+        getCurrentWeather()
     }
 
     fun updateUIWithWeatherData(weatherPojo: WeatherPojo){

@@ -33,10 +33,11 @@
             />
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -102,6 +103,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
                                 <RadioGroup
+                                    android:id="@+id/locationGroup"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:layout_constraintTop_toTopOf="parent"
@@ -109,6 +111,7 @@
                                     app:layout_constraintEnd_toEndOf="parent"
                                     >
                                     <RadioButton
+                                        android:id="@+id/gpsRB"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:backgroundTint="@color/home_card_color"
@@ -119,6 +122,7 @@
                                         android:layout_marginLeft="16dp"
                                         />
                                     <RadioButton
+                                        android:id="@+id/mapRB"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:backgroundTint="@color/home_card_color"
@@ -184,6 +188,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
                                 <RadioGroup
+                                    android:id="@+id/languageGroup"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:layout_constraintTop_toTopOf="parent"
@@ -191,6 +196,7 @@
                                     app:layout_constraintEnd_toEndOf="parent"
                                     >
                                     <RadioButton
+                                        android:id="@+id/englishRB"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:backgroundTint="@color/home_card_color"
@@ -201,6 +207,7 @@
                                         android:layout_marginLeft="16dp"
                                         />
                                     <RadioButton
+                                        android:id="@+id/arabicRB"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:backgroundTint="@color/home_card_color"
@@ -277,6 +284,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
                                 <RadioGroup
+                                    android:id="@+id/tempGroup"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:layout_constraintTop_toTopOf="parent"
@@ -284,6 +292,7 @@
                                     app:layout_constraintEnd_toEndOf="parent"
                                     >
                                     <RadioButton
+                                        android:id="@+id/celsiusRB"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:backgroundTint="@color/home_card_color"
@@ -294,6 +303,7 @@
                                         android:layout_marginLeft="16dp"
                                         />
                                     <RadioButton
+                                        android:id="@+id/kelvinRB"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:backgroundTint="@color/home_card_color"
@@ -304,6 +314,7 @@
                                         android:layout_marginLeft="16dp"
                                         />
                                     <RadioButton
+                                        android:id="@+id/fahrenheitRB"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:backgroundTint="@color/home_card_color"
@@ -369,6 +380,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
                                 <RadioGroup
+                                    android:id="@+id/windSpeedGroup"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:layout_constraintTop_toTopOf="parent"
@@ -376,6 +388,7 @@
                                     app:layout_constraintEnd_toEndOf="parent"
                                     >
                                     <RadioButton
+                                        android:id="@+id/meterToSecRB"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:backgroundTint="@color/home_card_color"
@@ -386,6 +399,7 @@
                                         android:layout_marginLeft="16dp"
                                         />
                                     <RadioButton
+                                        android:id="@+id/milesToHourRB"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:backgroundTint="@color/home_card_color"
@@ -461,6 +475,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
                                 <RadioGroup
+                                    android:id="@+id/notificationGroup"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:layout_constraintTop_toTopOf="parent"
@@ -468,6 +483,7 @@
                                     app:layout_constraintEnd_toEndOf="parent"
                                     >
                                     <RadioButton
+                                        android:id="@+id/enabledRB"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:backgroundTint="@color/home_card_color"
@@ -478,6 +494,7 @@
                                         android:layout_marginLeft="16dp"
                                         />
                                     <RadioButton
+                                        android:id="@+id/disabledRB"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:backgroundTint="@color/home_card_color"

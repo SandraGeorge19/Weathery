@@ -1,9 +1,7 @@
 package iti.mad42.weathery
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Context
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
@@ -11,12 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.gauravk.bubblenavigation.BubbleNavigationLinearView
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.*
 import iti.mad42.weathery.alarms.view.AlarmFragment
 import iti.mad42.weathery.favourites.view.FavoritesFragment
@@ -91,8 +86,10 @@ class MainActivity : AppCompatActivity() {
                     }else{
                         latitude = location.latitude
                         longitude = location.longitude
-                        saveToSharedPref("GPSLat", latitude!!)
-                        saveToSharedPref("GPSLong", longitude!!)
+                        Utility.saveToSharedPref(applicationContext,"GPSLat", latitude!!)
+                        Utility.saveToSharedPref(applicationContext,"GPSLong", longitude!!)
+//                        Utility.saveLanguageToSharedPref(applicationContext, "Lang", "en")
+//                        Utility.saveTempToSharedPref(applicationContext, "Temp", "metric")
 
                         Log.i("Sandra", "getFreshLocation: $latitude and long : $longitude")
 
@@ -138,8 +135,10 @@ class MainActivity : AppCompatActivity() {
             var location : Location = p0.lastLocation
             latitude = location.latitude
             longitude = location.longitude
-            saveToSharedPref("GPSLat", latitude!!)
-            saveToSharedPref("GPSLong", longitude!!)
+            Utility.saveToSharedPref(applicationContext,"GPSLat", latitude!!)
+            Utility.saveToSharedPref(applicationContext,"GPSLong", longitude!!)
+//            Utility.saveLanguageToSharedPref(applicationContext, "Lang", "en")
+//            Utility.saveTempToSharedPref(applicationContext, "Temp", "metric")
             Log.i("Sandra", "call back: $latitude and long : $longitude")
 
         }
@@ -154,10 +153,5 @@ class MainActivity : AppCompatActivity() {
             PERMISSION_ID)
     }
 
-    public fun saveToSharedPref(key : String, value : Double){
-        var editor : SharedPreferences.Editor = this.getSharedPreferences("LatLong", MODE_PRIVATE).edit()
-        editor.putFloat(key, value.toFloat())
-        editor.apply()
-    }
 
 }

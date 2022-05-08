@@ -163,7 +163,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/medication_treatment_Duration_to_edt"
+                        android:id="@+id/alarmToEdit"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -230,7 +230,7 @@
                         />
 
                     <Spinner
-                        android:id="@+id/medication_strength_unit_spinner"
+                        android:id="@+id/alarmTypeSpinner"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginStart="16dp"
@@ -239,6 +239,7 @@
                         android:background="@color/secondary_main_color"
                         android:contentDescription="Alarm Type"
                         android:elevation="8dp"
+
                         android:fontFamily="@font/merriweathersans_regular"
                         android:spinnerMode="dropdown"
                         app:layout_constraintTop_toBottomOf="@id/alarmTypeTxt"

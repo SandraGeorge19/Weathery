@@ -1,6 +1,8 @@
 package iti.mad42.weathery.favourites.view
 
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.common.ConnectionResult
@@ -66,6 +69,41 @@ class FavoritesFragment : Fragment() {
             this.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             this.adapter = favoritesAdapter
         }
+        binding.apply {
+            ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT){
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val favPlace = favoritesAdapter.favLocationList[viewHolder.adapterPosition]
+
+                    var confirmDialog = AlertDialog.Builder(requireContext())
+                    confirmDialog.setMessage("Do you want to delete this location from favorites?")
+                        .setCancelable(true)
+                        .setPositiveButton("Delete", DialogInterface.OnClickListener{
+                                dialogInterface, i ->
+                            favPlaceVM.deletePlaceFromFav(favPlace)
+                        })
+                        .setNegativeButton("Cancel", DialogInterface.OnClickListener{
+                                dialogInterface, i ->
+                            favoritesAdapter.notifyDataSetChanged()
+                            dialogInterface.cancel()
+
+                        })
+                    val alert = confirmDialog.create()
+                    alert.setTitle("Confirm Deleting")
+                    alert.show()
+                }
+
+            }).attachToRecyclerView(favRecycler)
+
+        }
+
     }
 
     private fun initFavFactoryAndViewModel(){
@@ -81,6 +119,9 @@ class FavoritesFragment : Fragment() {
             }
         }
     }
+
+
+    //check connectivity in utility
 
     private fun isGoogleServiceOK() : Boolean{
         var available : Int = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(requireActivity())

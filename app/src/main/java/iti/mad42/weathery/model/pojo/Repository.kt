@@ -31,6 +31,10 @@ class Repository private constructor(
     override val getWeatherPojo: LiveData<WeatherPojo>
         get() = localDataSource.getWeatherPojo
 
+    override fun insertCurrentWeather(weatherPojo: WeatherPojo) {
+        localDataSource.insertCurrentWeather(weatherPojo)
+    }
+
     //favoriteWeather methods
     override val getAllFavoriteWeathers: LiveData<List<FavoriteWeather>>
         get() = localDataSource.getAllFavoriteWeathers

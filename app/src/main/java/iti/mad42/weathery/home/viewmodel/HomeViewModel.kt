@@ -14,12 +14,15 @@ class HomeViewModel(
 
     init {
         getWeatherForCurrentLocation()
+        //addCurrentWeatherToDB(weatherPojo.value!!)
     }
 
     fun getWeatherForCurrentLocation(){
         viewModelScope.launch(Dispatchers.IO) {
             var weather = repository.getCurrentTempData()
             _mutableWeatherPojo.postValue(weather)
+            weather.locationId = "${weather.lat},${weather.lon}"
+            repository.insertCurrentWeather(weather)
         }
     }
 }
