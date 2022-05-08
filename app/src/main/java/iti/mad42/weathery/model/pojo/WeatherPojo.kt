@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import org.jetbrains.annotations.NotNull
 import java.io.Serializable
 
-@Entity(tableName = "Weather")
+@Entity(tableName = "weather")
 data class WeatherPojo(
     @PrimaryKey
     @NotNull
@@ -17,5 +17,6 @@ data class WeatherPojo(
     val timezoneOffset: Long,
     val current: CurrentWeather,
     val hourly: List<CurrentWeather>,
-    val daily: List<DailyWeather>
+    val daily: List<DailyWeather>,
+    val alerts : List<Alert>?
 ) : Serializable

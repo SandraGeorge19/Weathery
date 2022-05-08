@@ -1,6 +1,9 @@
 package iti.mad42.weathery.favourites.view
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.location.Address
 import android.location.Geocoder
@@ -48,6 +51,9 @@ class MapActivity : AppCompatActivity() , OnMapReadyCallback, OnClickConfirmAddT
 
     override fun onMapReady(googleMap: GoogleMap) {
         favMap = googleMap
+        var markerOptions : MarkerOptions = MarkerOptions().position(LatLng(26.8206,  30.8025)).title(getAddressAndDateForLocation(26.8206,  30.8025))
+
+        favMap.addMarker(markerOptions)
         favMap.setOnMapClickListener {
             var markerOptions : MarkerOptions = MarkerOptions().position(it).title(getAddressAndDateForLocation(it.latitude, it.longitude))
             favMap.clear()
@@ -59,6 +65,13 @@ class MapActivity : AppCompatActivity() , OnMapReadyCallback, OnClickConfirmAddT
         }
 
     }
+
+
+    private fun initFavFactoryAndViewModel(){
+        favPlaceFactory = FavoritesViewModelFactory(Repository.getInstance(RemoteDataSource.getInstance(), ConcreteLocalDataSource(this), this))
+        favPlaceVM = ViewModelProvider(this,favPlaceFactory).get(FavoritesViewModel::class.java)
+    }
+
 
     fun getAddressAndDateForLocation(lat : Double, lon : Double) : String{
         //GPSLat GPSLong
@@ -74,16 +87,25 @@ class MapActivity : AppCompatActivity() , OnMapReadyCallback, OnClickConfirmAddT
         return ""
     }
 
-    private fun initFavFactoryAndViewModel(){
-        favPlaceFactory = FavoritesViewModelFactory(Repository.getInstance(RemoteDataSource.getInstance(), ConcreteLocalDataSource(this), this))
-        favPlaceVM = ViewModelProvider(this,favPlaceFactory).get(FavoritesViewModel::class.java)
-    }
-
 
     override fun onClickConfirmAddToFavBtn(favPlace: FavoriteWeather) {
         binding.saveFavBtn.setOnClickListener {
-            favPlaceVM.addPlaceToFav(favPlace)
-            finish()
+            var confirmDialog = AlertDialog.Builder(this)
+            confirmDialog.setMessage("Do you want to save this location to favorites?")
+                .setCancelable(true)
+                .setPositiveButton("Save", DialogInterface.OnClickListener{
+                    dialogInterface, i ->
+                        favPlaceVM.addPlaceToFav(favPlace)
+                        finish()
+                })
+                .setNegativeButton("Cancel", DialogInterface.OnClickListener{
+                    dialogInterface, i ->  dialogInterface.cancel()
+                })
+            val alert = confirmDialog.create()
+            alert.setTitle("Confirm Saving")
+            alert.show()
+//            favPlaceVM.addPlaceToFav(favPlace)
+//            finish()
         }
     }
 }

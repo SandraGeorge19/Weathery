@@ -13,6 +13,7 @@ class ConcreteLocalDataSource(context: Context) : LocalDataSourceInterface {
 
     override val getWeatherPojo: LiveData<WeatherPojo>
 
+
     override val getAllFavoriteWeathers: LiveData<List<FavoriteWeather>>
 
     override val allAlarmsList: LiveData<List<AlarmPojo>>
@@ -28,6 +29,10 @@ class ConcreteLocalDataSource(context: Context) : LocalDataSourceInterface {
         allAlarmsList = alarmDAO.allAlarmsList
     }
 
+    //weather response methods
+    override fun insertCurrentWeather(weatherPojo: WeatherPojo) {
+        weatherDAO?.insertCurrentWeather(weatherPojo)
+    }
 
     //fav weather methods
     override fun addWeatherToFav(favoriteWeather: FavoriteWeather) {

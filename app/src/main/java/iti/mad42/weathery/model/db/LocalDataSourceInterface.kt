@@ -9,6 +9,7 @@ interface LocalDataSourceInterface {
 
     //WeatherResponse methods
     val getWeatherPojo : LiveData<WeatherPojo>
+    fun insertCurrentWeather(weatherPojo: WeatherPojo)
 
     //FavoriteWeather methods
     val getAllFavoriteWeathers : LiveData<List<FavoriteWeather>>

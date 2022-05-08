@@ -6,16 +6,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import iti.mad42.weathery.addalarmscreen.view.AddAlarmActivity
+import iti.mad42.weathery.alarms.viewmodel.AlarmViewModel
+import iti.mad42.weathery.alarms.viewmodel.AlarmViewModelFactory
 import iti.mad42.weathery.databinding.FragmentAlarmBinding
+import iti.mad42.weathery.model.db.ConcreteLocalDataSource
+import iti.mad42.weathery.model.network.RemoteDataSource
+import iti.mad42.weathery.model.pojo.Repository
 import iti.mad42.weathery.model.pojo.TodayHoursTemp
 
 class AlarmFragment : Fragment() {
 
     private lateinit var binding: FragmentAlarmBinding
     private lateinit var alarmAdapter: AlarmAdapter
+    lateinit var alarmVM : AlarmViewModel
+    lateinit var alarmVMFactory : AlarmViewModelFactory
     lateinit var alarmsList : ArrayList<TodayHoursTemp>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +52,7 @@ class AlarmFragment : Fragment() {
         binding.addAlertBtn.setOnClickListener { startActivity(Intent(context, AddAlarmActivity::class.java)) }
 
         initAlarmsRecycler()
+        initAlarmVMAndFactory()
     }
 
     fun initAlarmsRecycler(){
@@ -54,5 +63,12 @@ class AlarmFragment : Fragment() {
             this.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             this.adapter = alarmAdapter
         }
+    }
+
+    fun initAlarmVMAndFactory(){
+        alarmVMFactory = AlarmViewModelFactory(
+            Repository.getInstance(RemoteDataSource.getInstance(), ConcreteLocalDataSource(requireContext()), requireContext())
+        )
+        alarmVM = ViewModelProvider(this, alarmVMFactory).get(AlarmViewModel::class.java)
     }
 }

@@ -9,4 +9,8 @@ import iti.mad42.weathery.model.pojo.WeatherPojo
 interface WeatherResponseDAO {
     @get:Query("SELECT * FROM weather")
     val getCurrentWeather : LiveData<WeatherPojo>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCurrentWeather(weatherPojo: WeatherPojo)
+
 }
