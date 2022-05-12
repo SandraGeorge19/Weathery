@@ -46,8 +46,6 @@ class MainActivity : AppCompatActivity() {
                 3 -> setFragment(SettingFragment())
             }
         }
-
-
     }
 
     override fun onResume() {
@@ -60,8 +58,6 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer, fragment)
             .commit()
     }
-
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -90,7 +86,6 @@ class MainActivity : AppCompatActivity() {
                         Utility.saveToSharedPref(applicationContext,"GPSLong", longitude!!)
 //                        Utility.saveLanguageToSharedPref(applicationContext, "Lang", "en")
 //                        Utility.saveTempToSharedPref(applicationContext, "Temp", "metric")
-
                         Log.i("Sandra", "getFreshLocation: $latitude and long : $longitude")
 
                         //add them to shared prefs
@@ -152,6 +147,4 @@ class MainActivity : AppCompatActivity() {
             ),
             PERMISSION_ID)
     }
-
-
 }

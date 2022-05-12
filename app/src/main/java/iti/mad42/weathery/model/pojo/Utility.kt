@@ -12,9 +12,12 @@ class Utility {
     //api key map
     //AIzaSyBDIon-VAldKAVRgh_V5MGSBgi1_NYNO9E
     companion object{
-        val sharedPrefKey : String = "LatLong"
+        val latLongSharedPrefKey : String = "LatLong"
         val GPSLatKey : String = "GPSLat"
         val GPSLongKey : String = "GPSLong"
+        val Language_EN_Value : String = "en"
+        val Language_AR_Value : String = "ar"
+        val Language_Key : String = "Lang"
         val ERROR_DIALOG_REQUEST = 5555
 
         val ALERT_TYPE_ARRAY = arrayOf("Rain", "Snow", "Cloud", "Wind", "Thunder Storm","Mist / Fog","Fire warning")
@@ -63,5 +66,7 @@ class Utility {
             editor.putString(key, value)
             editor.apply()
         }
+
+
     }
 }
