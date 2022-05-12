@@ -1,5 +1,7 @@
 package iti.mad42.weathery.settings.view
 
+import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,12 +11,15 @@ import android.widget.Toast
 import iti.mad42.weathery.R
 import iti.mad42.weathery.databinding.FragmentHomeBinding
 import iti.mad42.weathery.databinding.FragmentSettingBinding
+import iti.mad42.weathery.model.pojo.LocaleManager
 import iti.mad42.weathery.model.pojo.Utility
+import java.util.*
 
 
 class SettingFragment : Fragment() {
 
     lateinit var binding : FragmentSettingBinding
+    lateinit var myIntent : Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +43,11 @@ class SettingFragment : Fragment() {
         changeTemp()
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        changeLanguage()
+    }
+
     fun initUI(){
         binding.locationGroup
         binding.languageGroup
@@ -51,15 +61,19 @@ class SettingFragment : Fragment() {
         binding.languageGroup.setOnCheckedChangeListener {radioGroup, checkedButtonId ->
             when{
                 checkedButtonId == binding.englishRB.id -> {
-                    Utility.saveLanguageToSharedPref(requireContext(), "Lang", "en")
+                    Utility.saveLanguageToSharedPref(requireContext(), Utility.Language_Key, Utility.Language_EN_Value)
+                    LocaleManager.setLocale(requireContext())
                     Toast.makeText(requireContext(), "You changed Language to English", Toast.LENGTH_SHORT).show()
                 }
                 checkedButtonId == binding.arabicRB.id -> {
-                    Utility.saveLanguageToSharedPref(requireContext(), "Lang", "ar")
+                    Utility.saveLanguageToSharedPref(requireContext(), Utility.Language_Key, Utility.Language_AR_Value)
+                    LocaleManager.setLocale(requireContext())
                     Toast.makeText(requireContext(), "You changed Language to Arabic", Toast.LENGTH_SHORT).show()
 
                 }
             }
+            //myIntent = Intent(requireActivity(), SettingFragment::class.java)
+
         }
     }
 

@@ -13,6 +13,7 @@ data class AlarmPojo(
     var alarmTitle : String,
     var alarmStartDate : Long,
     var alarmEndDate : Long,
+    var alarmTime : Long,
     var alarmType : String,
     var isNotification : Boolean
 ) : Serializable

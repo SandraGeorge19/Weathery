@@ -25,4 +25,8 @@ class HomeViewModel(
             repository.insertCurrentWeather(weather)
         }
     }
+
+    fun getLocalWeather() : LiveData<WeatherPojo>{
+        return repository.getWeatherPojo
+    }
 }

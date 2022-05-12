@@ -37,7 +37,7 @@
             app:bt_colorInactive="#5A5A5A"
             app:bt_shape="@drawable/transition_home"
             app:bt_icon="@drawable/cloud"
-            app:bt_title="Home"
+            app:bt_title="@string/home_txt"
             android:fontFamily="@font/merriweathersans_italic"
             />
         <com.gauravk.bubblenavigation.BubbleToggleView
@@ -50,7 +50,7 @@
             app:bt_shape="@drawable/transition_home"
             android:layout_marginLeft="32dp"
             app:bt_icon="@drawable/favorite"
-            app:bt_title="Favorites"
+            app:bt_title="@string/favorites_txt"
             android:fontFamily="@font/merriweathersans_bold"
             />
         <com.gauravk.bubblenavigation.BubbleToggleView
@@ -63,7 +63,7 @@
             app:bt_shape="@drawable/transition_home"
             android:layout_marginLeft="32dp"
             app:bt_icon="@drawable/alarm"
-            app:bt_title="Alarms"
+            app:bt_title="@string/alarms_txt"
             android:fontFamily="@font/merriweathersans_bold"
             />
         <com.gauravk.bubblenavigation.BubbleToggleView
@@ -76,7 +76,7 @@
             app:bt_colorInactive="#5A5A5A"
             app:bt_icon="@drawable/setting"
             app:bt_shape="@drawable/transition_home"
-            app:bt_title="Setting"
+            app:bt_title="@string/setting_txt"
             android:fontFamily="@font/merriweathersans_bold"
             />
     </com.gauravk.bubblenavigation.BubbleNavigationLinearView>

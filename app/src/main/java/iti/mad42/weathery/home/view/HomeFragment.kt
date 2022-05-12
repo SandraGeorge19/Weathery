@@ -1,10 +1,12 @@
 package iti.mad42.weathery.home.view
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import iti.mad42.weathery.broadcast.NetworkChangeReceiver
 import iti.mad42.weathery.databinding.FragmentHomeBinding
 import iti.mad42.weathery.home.viewmodel.HomeViewModel
 import iti.mad42.weathery.home.viewmodel.HomeViewModelFactory
@@ -88,20 +92,34 @@ class HomeFragment : Fragment() {
         var languageShared : SharedPreferences = requireContext().getSharedPreferences("Language", AppCompatActivity.MODE_PRIVATE)
         var unitsShared : SharedPreferences = requireContext().getSharedPreferences("Units", AppCompatActivity.MODE_PRIVATE)
 
-        homeViewModel.weatherPojo.observe(requireActivity()){
-            if(it != null){
-                updateUIWithWeatherData(it)
-                var s = unitsShared.getString("Temp","metric")!!
-                var d =  languageShared.getString("Lang", "en")!!
-                Log.e("sandra", "getCurrentWeather: temp is : $s lang is: $d", )
+        if(NetworkChangeReceiver.isOnline){
+            Log.e("sandra", "online is : ${NetworkChangeReceiver.isOnline}", )
+            homeViewModel.weatherPojo.observe(requireActivity()){
+                if(it != null){
+                    updateUIWithWeatherData(it)
+                    var s = unitsShared.getString("Temp","metric")!!
+                    var d =  languageShared.getString("Lang", "en")!!
+                    Log.e("sandra", "getCurrentWeather: temp is : $s lang is: $d", )
+                }
             }
+        } else{
+            Log.e("sandra", "in else online is : ${NetworkChangeReceiver.isOnline}", )
+
+            homeViewModel.getLocalWeather().observe(requireActivity()){
+                if(it != null){
+                    Log.e("sandra", "getCurrentWeather: from local data home fragment", )
+                    updateUIWithWeatherData(it)
+                }
+            }
+            Snackbar.make(requireView(), "There is no Internet Connection!", Snackbar.LENGTH_LONG)
+                .setAction("Setting", View.OnClickListener { startActivityForResult( Intent(Settings.ACTION_SETTINGS), 0); }).show()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        Log.e("d", "onResume: iiiiii", )
-        initFactoryAndViewModel()
+//        Log.e("d", "onResume: iiiiii", )
+//        initFactoryAndViewModel()
         getCurrentWeather()
     }
 
