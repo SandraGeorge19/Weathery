@@ -17,6 +17,7 @@
 <!--        android:background="@drawable/home_gradient_card"-->
 <!--        android:orientation="horizontal" />-->
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/onClickFavCell"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >

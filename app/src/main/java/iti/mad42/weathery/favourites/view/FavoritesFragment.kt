@@ -18,6 +18,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import iti.mad42.weathery.R
 import iti.mad42.weathery.databinding.FragmentFavoritesBinding
+import iti.mad42.weathery.favoriteweatherdetails.view.FavoriteWeatherDetailsActivity
 import iti.mad42.weathery.favourites.viewmodel.FavoritesViewModel
 import iti.mad42.weathery.favourites.viewmodel.FavoritesViewModelFactory
 import iti.mad42.weathery.model.db.ConcreteLocalDataSource
@@ -28,7 +29,7 @@ import iti.mad42.weathery.model.pojo.TodayHoursTemp
 import iti.mad42.weathery.model.pojo.Utility
 
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : Fragment() , OnClickFavPlaceListener {
     private lateinit var binding: FragmentFavoritesBinding
     private lateinit var favoritesAdapter : FavoriteLocationAdapter
     lateinit var favPlaceFactory: FavoritesViewModelFactory
@@ -63,7 +64,7 @@ class FavoritesFragment : Fragment() {
 
     fun initFavRecycler(){
         binding.favRecycler
-        favoritesAdapter = FavoriteLocationAdapter(listOf<FavoriteWeather>(), context)
+        favoritesAdapter = FavoriteLocationAdapter(listOf<FavoriteWeather>(), context, this)
         binding.favRecycler.setHasFixedSize(true)
         binding.favRecycler.apply {
             this.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -120,6 +121,14 @@ class FavoritesFragment : Fragment() {
         }
     }
 
+    override fun onClickFavPlace(favPlace: FavoriteWeather) {
+        goToFavPlaceDetails(favPlace)
+    }
+    fun goToFavPlaceDetails(favPlace : FavoriteWeather){
+        var goToFavDetails : Intent = Intent(activity, FavoriteWeatherDetailsActivity::class.java)
+        goToFavDetails.putExtra("fromFavToDetails", favPlace)
+        startActivity(goToFavDetails)
+    }
 
     //check connectivity in utility
 

@@ -26,6 +26,10 @@ class Repository private constructor(
         return remoteSource.getCurrentTempData(context)
     }
 
+    override suspend fun getFavWeatherData(favWeather : FavoriteWeather): WeatherPojo {
+        return remoteSource.getFavTempData(favWeather ,context)
+    }
+
     //LocalDataSource methods
     //weatherPojo methods
 

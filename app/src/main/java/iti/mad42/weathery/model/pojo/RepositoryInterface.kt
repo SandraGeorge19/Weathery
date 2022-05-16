@@ -7,6 +7,7 @@ import iti.mad42.weathery.model.network.RemoteSourceInterface
 interface RepositoryInterface {
     // Retrofit Functions
     suspend fun getCurrentTempData() : WeatherPojo
+    suspend fun getFavWeatherData(favWeather : FavoriteWeather) : WeatherPojo
 
     //LocalDataBase Functions
     //weatherPojo fun
