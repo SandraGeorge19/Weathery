@@ -64,12 +64,13 @@ class SettingFragment : Fragment() {
                     Utility.saveLanguageToSharedPref(requireContext(), Utility.Language_Key, Utility.Language_EN_Value)
                     LocaleManager.setLocale(requireContext())
                     Toast.makeText(requireContext(), "You changed Language to English", Toast.LENGTH_SHORT).show()
+                    refreshFragment()
                 }
                 checkedButtonId == binding.arabicRB.id -> {
                     Utility.saveLanguageToSharedPref(requireContext(), Utility.Language_Key, Utility.Language_AR_Value)
                     LocaleManager.setLocale(requireContext())
                     Toast.makeText(requireContext(), "You changed Language to Arabic", Toast.LENGTH_SHORT).show()
-
+                    refreshFragment()
                 }
             }
             //myIntent = Intent(requireActivity(), SettingFragment::class.java)
@@ -81,19 +82,32 @@ class SettingFragment : Fragment() {
         binding.tempGroup.setOnCheckedChangeListener { radioGroup, checkedButtonId ->
             when{
                 checkedButtonId == binding.celsiusRB.id ->{
-                    Utility.saveTempToSharedPref(requireContext(), "Temp", "metric")
+                    Utility.saveTempToSharedPref(requireContext(), Utility.TEMP_KEY, Utility.METRIC)
                     Toast.makeText(requireContext(), "You changed Temperature to Celsius", Toast.LENGTH_SHORT).show()
+                    refreshFragment()
                 }
                 checkedButtonId == binding.kelvinRB.id ->{
-                    Utility.saveTempToSharedPref(requireContext(), "Temp", "standard")
+                    Utility.saveTempToSharedPref(requireContext(), Utility.TEMP_KEY, Utility.STANDARD)
                     Toast.makeText(requireContext(), "You changed Temperature to Kelvin", Toast.LENGTH_SHORT).show()
+                    refreshFragment()
                 }
                 checkedButtonId == binding.fahrenheitRB.id ->{
-                    Utility.saveTempToSharedPref(requireContext(), "Temp", "imperial")
+                    Utility.saveTempToSharedPref(requireContext(), Utility.TEMP_KEY, Utility.IMPERIAL)
                     Toast.makeText(requireContext(), "You changed Temperature to Fahrenheit", Toast.LENGTH_SHORT).show()
+                    refreshFragment()
                 }
             }
         }
+    }
+
+//    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+//        super.setUserVisibleHint(isVisibleToUser)
+//        if(isVisibleToUser){
+//            fragmentManager?.beginTransaction()?.detach(this)?.attach(this)?.commit()
+//        }
+//    }
+    private fun refreshFragment(){
+        fragmentManager?.beginTransaction()?.detach(this)?.attach(this)?.commit()
     }
 
 }

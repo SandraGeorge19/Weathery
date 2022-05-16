@@ -2,6 +2,7 @@ package iti.mad42.weathery.model.db
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import io.reactivex.Single
 import iti.mad42.weathery.model.pojo.AlarmPojo
 import iti.mad42.weathery.model.pojo.FavoriteWeather
 import iti.mad42.weathery.model.pojo.WeatherPojo
@@ -16,7 +17,8 @@ class ConcreteLocalDataSource(context: Context) : LocalDataSourceInterface {
 
     override val getAllFavoriteWeathers: LiveData<List<FavoriteWeather>>
 
-    override val allAlarmsList: LiveData<List<AlarmPojo>>
+    override val allAlarmsLiveList: LiveData<List<AlarmPojo>>?
+    override val allAlarmsList: Single<List<AlarmPojo>>?
 
 
     init {
@@ -27,6 +29,7 @@ class ConcreteLocalDataSource(context: Context) : LocalDataSourceInterface {
         getWeatherPojo = weatherDAO.getCurrentWeather
         getAllFavoriteWeathers = favWeatherDAO.getAllFavoriteWeather
         allAlarmsList = alarmDAO.allAlarmsList
+        allAlarmsLiveList = alarmDAO.allAlarmsLiveList
     }
 
     //weather response methods
@@ -45,6 +48,11 @@ class ConcreteLocalDataSource(context: Context) : LocalDataSourceInterface {
 
 
     //alarm weather methods
+
+    override fun getSpecificAlarm(id: Int) : Single<AlarmPojo>?{
+        return alarmDAO?.getSpecificAlarm(id)
+    }
+
     override fun insertAlarm(alarmPojo: AlarmPojo) {
         alarmDAO?.insertAlarm(alarmPojo)
     }

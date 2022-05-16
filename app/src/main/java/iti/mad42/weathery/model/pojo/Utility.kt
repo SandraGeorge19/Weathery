@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import java.text.DateFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -18,6 +19,10 @@ class Utility {
         val Language_EN_Value : String = "en"
         val Language_AR_Value : String = "ar"
         val Language_Key : String = "Lang"
+        val TEMP_KEY = "Temp"
+        val IMPERIAL = "imperial"
+        val STANDARD = "standard"
+        val METRIC = "metric"
         val ERROR_DIALOG_REQUEST = 5555
 
         val ALERT_TYPE_ARRAY = arrayOf("Rain", "Snow", "Cloud", "Wind", "Thunder Storm","Mist / Fog","Fire warning")
@@ -41,6 +46,27 @@ class Utility {
             var date: Date = Date(dt * 1000)
             var dateFormat : DateFormat = SimpleDateFormat("h")
             return dateFormat.format(date)
+        }
+
+        fun getCurrentDay(): String {
+            val dateFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val date = Date()
+            return dateFormat.format(date)
+        }
+
+        fun dateToLong(date: String?): Long {
+            val f = SimpleDateFormat("dd-MM-yyyy")
+            var milliseconds: Long = 0
+            try {
+                val d = f.parse(date)
+                milliseconds = d.time
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            return milliseconds
+        }
+        fun timeToMillis(hour: Int, min: Int): Long {
+            return ((hour * 60 + min) * 60 * 1000).toLong()
         }
 
         fun saveToSharedPref(context: Context ,key : String, value : Double){

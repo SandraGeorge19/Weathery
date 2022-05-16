@@ -121,4 +121,20 @@ class Converters {
             return gson.fromJson(alertListString, list)
         }
     }
+
+    //convert from / to list of alarm days
+    @TypeConverter
+    open fun fromAlarmDaysToString(alarmDaysList: List<String?>?): String? {
+        return gson.toJson(alarmDaysList)
+    }
+
+    @TypeConverter
+    fun fromStringToAlarmDays(alarmDaysString: String?): List<String?>? {
+        return if (alarmDaysString == null) {
+            emptyList<String>()
+        } else {
+            val list = object : TypeToken<List<String?>?>() {}.type
+            gson.fromJson(alarmDaysString, list)
+        }
+    }
 }
