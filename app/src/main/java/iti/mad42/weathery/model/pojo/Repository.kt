@@ -3,6 +3,7 @@ package iti.mad42.weathery.model.pojo
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
+import io.reactivex.Single
 import iti.mad42.weathery.model.db.LocalDataSourceInterface
 import iti.mad42.weathery.model.network.RemoteSourceInterface
 
@@ -48,9 +49,16 @@ class Repository private constructor(
     }
 
     //alarm methods
-    override val allAlarmsList: LiveData<List<AlarmPojo>>
+    override val allAlarmsLiveList: LiveData<List<AlarmPojo>>?
+        get() = localDataSource.allAlarmsLiveList
+
+    override val allAlarmsList: Single<List<AlarmPojo>>?
         get() = localDataSource.allAlarmsList
 
+
+    override fun getSpecificAlarm(id: Int): Single<AlarmPojo>? {
+        return localDataSource.getSpecificAlarm(id)
+    }
     override fun insertAlarm(alarmPojo: AlarmPojo) {
         localDataSource.insertAlarm(alarmPojo)
     }

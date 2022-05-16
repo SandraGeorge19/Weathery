@@ -24,7 +24,7 @@ class RemoteDataSource private constructor() : RemoteSourceInterface{
         var s = unitsShared.getString("Temp","")!!
         //Log.e("sandra", "temp value in shared: $s", )
         val response = retrofitService.getCurrentTempData(
-            sharedPreferences.getFloat(Utility.GPSLatKey, 0.0F).toDouble(), sharedPreferences.getFloat(Utility.GPSLongKey, 0.0F).toDouble(), "4a059725f93489b95183bbcb8c6829b9", unitsShared.getString("Temp","metric")!!, languageShared.getString(Utility.Language_Key, "en")!!
+            sharedPreferences.getFloat(Utility.GPSLatKey, 0.0F).toDouble(), sharedPreferences.getFloat(Utility.GPSLongKey, 0.0F).toDouble(), "4a059725f93489b95183bbcb8c6829b9", unitsShared.getString(Utility.TEMP_KEY,"metric").toString(), languageShared.getString(Utility.Language_Key, "en")!!
         )
         if (response.isSuccessful == true){
              weatherPojo = response.body()!!

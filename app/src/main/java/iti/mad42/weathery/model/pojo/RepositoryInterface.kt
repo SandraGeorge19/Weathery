@@ -1,6 +1,7 @@
 package iti.mad42.weathery.model.pojo
 
 import androidx.lifecycle.LiveData
+import io.reactivex.Single
 import iti.mad42.weathery.model.network.RemoteSourceInterface
 
 interface RepositoryInterface {
@@ -18,7 +19,9 @@ interface RepositoryInterface {
     fun deleteWeatherFromFav(favoriteWeather: FavoriteWeather)
 
     //alarm fun
-    val allAlarmsList : LiveData<List<AlarmPojo>>
+    val allAlarmsLiveList : LiveData<List<AlarmPojo>>?
+    val allAlarmsList : Single<List<AlarmPojo>>?
+    fun getSpecificAlarm(id : Int) : Single<AlarmPojo>?
     fun insertAlarm(alarmPojo: AlarmPojo)
     fun deleteAlarm(alarmPojo: AlarmPojo)
 

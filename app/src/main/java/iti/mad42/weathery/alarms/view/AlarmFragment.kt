@@ -15,6 +15,7 @@ import iti.mad42.weathery.alarms.viewmodel.AlarmViewModelFactory
 import iti.mad42.weathery.databinding.FragmentAlarmBinding
 import iti.mad42.weathery.model.db.ConcreteLocalDataSource
 import iti.mad42.weathery.model.network.RemoteDataSource
+import iti.mad42.weathery.model.pojo.AlarmPojo
 import iti.mad42.weathery.model.pojo.Repository
 import iti.mad42.weathery.model.pojo.TodayHoursTemp
 
@@ -24,17 +25,10 @@ class AlarmFragment : Fragment() {
     private lateinit var alarmAdapter: AlarmAdapter
     lateinit var alarmVM : AlarmViewModel
     lateinit var alarmVMFactory : AlarmViewModelFactory
-    lateinit var alarmsList : ArrayList<TodayHoursTemp>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        alarmsList = ArrayList<TodayHoursTemp>()
-        alarmsList.add(TodayHoursTemp("02:00 PM", "23 ℃", "Friday"))
-        alarmsList.add(TodayHoursTemp("03:00 PM", "24 ℃", "Saturday"))
-        alarmsList.add(TodayHoursTemp("04:00 PM", "25 ℃", "Sunday"))
-        alarmsList.add(TodayHoursTemp("05:00 PM", "26 ℃", "Monday"))
-        alarmsList.add(TodayHoursTemp("06:00 PM", "27 ℃", "Tuesday"))
-        alarmsList.add(TodayHoursTemp("07:00 PM", "29 ℃", "Wednesday"))
     }
 
     override fun onCreateView(
@@ -53,11 +47,13 @@ class AlarmFragment : Fragment() {
 
         initAlarmsRecycler()
         initAlarmVMAndFactory()
+
+        getAlarms()
     }
 
     fun initAlarmsRecycler(){
         binding.alertRecycler
-        alarmAdapter = AlarmAdapter(alarmsList, context)
+        alarmAdapter = AlarmAdapter(listOf<AlarmPojo>(), context)
         binding.alertRecycler.setHasFixedSize(true)
         binding.alertRecycler.apply {
             this.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -70,5 +66,14 @@ class AlarmFragment : Fragment() {
             Repository.getInstance(RemoteDataSource.getInstance(), ConcreteLocalDataSource(requireContext()), requireContext())
         )
         alarmVM = ViewModelProvider(this, alarmVMFactory).get(AlarmViewModel::class.java)
+    }
+
+    fun getAlarms(){
+        alarmVM.getAllAlarms()?.observe(viewLifecycleOwner){ alarms ->
+            if(alarms.isNotEmpty()){
+                alarmAdapter.alarmsList = alarms
+                alarmAdapter.notifyDataSetChanged()
+            }
+        }
     }
 }

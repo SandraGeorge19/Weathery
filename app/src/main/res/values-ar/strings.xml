@@ -45,4 +45,6 @@
     <string name="notifications_txt">الاشعارات</string>
     <string name="enable_txt">متاحة</string>
     <string name="disable_txt">مغلقة</string>
+    <string name="weather_alert">منبه الطقس</string>
+    <string name="dismiss_btn_txt">اغلاق</string>
 </resources>

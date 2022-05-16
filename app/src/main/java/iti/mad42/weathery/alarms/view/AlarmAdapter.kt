@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import iti.mad42.weathery.databinding.AlarmCustomCellBinding
+import iti.mad42.weathery.model.pojo.AlarmPojo
 import iti.mad42.weathery.model.pojo.TodayHoursTemp
 
 class AlarmAdapter(
-    var alarmsList: List<TodayHoursTemp>,
+    var alarmsList: List<AlarmPojo>,
     var context: Context?
 ) : RecyclerView.Adapter<AlarmAdapter.ViewHolder>(){
 
@@ -29,12 +30,14 @@ class AlarmAdapter(
 
     override fun onBindViewHolder(holder: AlarmAdapter.ViewHolder, position: Int) {
         with(holder){
-            holder.binding.alarmTitleCell.text = alarmsList[position].day
-            holder.binding.alarmTypeCell.text = alarmsList[position].degree
+            holder.binding.alarmTitleCell.text = alarmsList[position].alarmTitle
+            holder.binding.alarmTypeCell.text = alarmsList[position].alarmType
             holder.binding.alarmSwitch.setOnCheckedChangeListener{ _, isChecked ->
                 if(isChecked){
+                    alarmsList[position].isNotification = true
                     Toast.makeText(context, "Checked", Toast.LENGTH_SHORT).show()
                 }else{
+                    alarmsList[position].isNotification = false
                     Toast.makeText(context, "NOTTTTT Checked", Toast.LENGTH_SHORT).show()
                 }
             }
