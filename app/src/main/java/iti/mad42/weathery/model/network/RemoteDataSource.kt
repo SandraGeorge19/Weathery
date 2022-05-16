@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import iti.mad42.weathery.model.pojo.FavoriteWeather
 import iti.mad42.weathery.model.pojo.Utility
 import iti.mad42.weathery.model.pojo.WeatherPojo
 
@@ -31,6 +32,19 @@ class RemoteDataSource private constructor() : RemoteSourceInterface{
             Log.i("sandra", "getCurrentTempData: ${weatherPojo.current}")
         }
         return weatherPojo
+    }
+
+    override suspend fun getFavTempData(favPojo: FavoriteWeather, context: Context): WeatherPojo {
+        lateinit var favWeatherDetails : WeatherPojo
+        var languageShared : SharedPreferences = context.getSharedPreferences("Language", AppCompatActivity.MODE_PRIVATE)
+        var unitsShared : SharedPreferences = context.getSharedPreferences("Units", AppCompatActivity.MODE_PRIVATE)
+
+        val retrofitService = RetrofitHelper.getInstance().create(RetrofitInterface::class.java)
+        val response = retrofitService.getFavTempData(favPojo.lat, favPojo.lon, "4a059725f93489b95183bbcb8c6829b9" , unitsShared.getString(Utility.TEMP_KEY,"metric").toString(), languageShared.getString(Utility.Language_Key, "en")!!)
+        if(response.isSuccessful == true){
+            favWeatherDetails = response.body()!!
+        }
+        return favWeatherDetails
     }
 
 }
