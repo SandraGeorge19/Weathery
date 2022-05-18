@@ -199,6 +199,5 @@ class AddAlarmActivity : AppCompatActivity() {
 
         WorkManager.getInstance().enqueueUniquePeriodicWork(
             "MyWorkManager", ExistingPeriodicWorkPolicy.REPLACE, periodicWorkRequest)
-        Log.e("Create alarm","setPeriodWorkManger")
     }
 }

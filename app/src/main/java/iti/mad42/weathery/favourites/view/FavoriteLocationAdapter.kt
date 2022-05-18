@@ -41,7 +41,7 @@ class FavoriteLocationAdapter(
                 if(NetworkChangeReceiver.isOnline){
                     listener.onClickFavPlace(favLocationList[position])
                 }else{
-                    Toast.makeText(context, "There is no internet, you can't the this place's weather details", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context?.getString(R.string.no_internet_msg), Toast.LENGTH_SHORT).show()
                 }
             }
         }
