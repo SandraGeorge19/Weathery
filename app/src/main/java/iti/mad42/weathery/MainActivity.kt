@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity() {
                         longitude = location.longitude
                         Utility.saveToSharedPref(applicationContext,"GPSLat", latitude!!)
                         Utility.saveToSharedPref(applicationContext,"GPSLong", longitude!!)
+                        Utility.saveOverlayPermission(applicationContext, "overlay", false)
 //                        Utility.saveLanguageToSharedPref(applicationContext, "Lang", "en")
 //                        Utility.saveTempToSharedPref(applicationContext, "Temp", "metric")
                         Log.i("Sandra", "getFreshLocation: $latitude and long : $longitude")
@@ -132,6 +133,7 @@ class MainActivity : AppCompatActivity() {
             longitude = location.longitude
             Utility.saveToSharedPref(applicationContext,"GPSLat", latitude!!)
             Utility.saveToSharedPref(applicationContext,"GPSLong", longitude!!)
+            Utility.saveOverlayPermission(applicationContext, "overlay", false)
 //            Utility.saveLanguageToSharedPref(applicationContext, "Lang", "en")
 //            Utility.saveTempToSharedPref(applicationContext, "Temp", "metric")
             Log.i("Sandra", "call back: $latitude and long : $longitude")

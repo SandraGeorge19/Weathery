@@ -13,6 +13,7 @@ interface RepositoryInterface {
     //weatherPojo fun
     val getWeatherPojo : LiveData<WeatherPojo>
     fun insertCurrentWeather(weatherPojo: WeatherPojo)
+    suspend fun getStoredWeather() : WeatherPojo
 
     //weatherFavorite fun
     val getAllFavoriteWeathers : LiveData<List<FavoriteWeather>>

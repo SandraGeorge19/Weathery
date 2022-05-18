@@ -32,13 +32,12 @@ import java.util.concurrent.TimeUnit
 
 class AlarmWindow(
     var context: Context,
-    var alarm : AlarmPojo,
+    var alarmDesc : String,
     var myDialog : Dialog = Dialog(context),
     var repository : RepositoryInterface = Repository.getInstance(RemoteDataSource.getInstance(), ConcreteLocalDataSource(context), context)
 ) {
 
     private lateinit var mView: View
-    private lateinit var mParams: WindowManager.LayoutParams
     private lateinit var mWindowManager: WindowManager
     private lateinit var layoutInflater: LayoutInflater
     private lateinit var alertCloseBtn: ImageView
@@ -47,29 +46,16 @@ class AlarmWindow(
     private lateinit var dismissBtn: Button
     lateinit var mMediaPlayer: MediaPlayer
 
-    fun setMediaPlayer(id : Int){
+    fun setMediaPlayer(id: Int) {
         mMediaPlayer = MediaPlayer()
         mMediaPlayer = MediaPlayer.create(context, id)
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
         mMediaPlayer.start()
     }
 
-    fun setAlarmWindowManager(){
+    fun setAlarmWindowManager() {
+        Log.e("sandra", "setAlarmWindowManager: ")
         setMediaPlayer(R.raw.noti)
-        repository.getSpecificAlarm(alarm.id)?.subscribe(object : SingleObserver<AlarmPojo>{
-            override fun onSubscribe(d: Disposable) {
-
-            }
-
-            override fun onSuccess(alarmPojo: AlarmPojo) {
-                alarm = alarmPojo
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
         layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         mView = layoutInflater.inflate(R.layout.alert_dialog, null)
         initView(mView)
@@ -80,78 +66,32 @@ class AlarmWindow(
             WindowManager.LayoutParams.TYPE_PHONE
         }
         mWindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        mParams = WindowManager.LayoutParams(
+        val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT,
             layoutFlag,
-            android.R.attr.showWhenLocked or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            android.R.attr.showWhenLocked or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_LOCAL_FOCUS_MODE,
             PixelFormat.TRANSLUCENT
         )
-        mWindowManager.addView(mView, mParams)
+        mWindowManager.addView(mView, params)
     }
 
-    fun initView(view : View){
+    fun initView(view: View) {
         alertCloseBtn = view.findViewById(R.id.dialogCloseBtn)
         alertTitle = view.findViewById(R.id.dialogTitle)
         alertSubTitle = view.findViewById(R.id.dialogSubTitle)
+        alertSubTitle.text = alarmDesc
         dismissBtn = view.findViewById(R.id.dismissAlertBtn)
         handleDialogBtns()
     }
 
-    fun handleDialogBtns(){
-        alertCloseBtn.setOnClickListener{
-            stopMyService()
+    fun handleDialogBtns() {
+        alertCloseBtn.setOnClickListener {
             close()
         }
         dismissBtn.setOnClickListener {
-            stopMyService()
             close()
         }
-    }
-
-    fun setAlarmOneTimeWorkManager(alarmPojo: AlarmPojo){
-        val data = Data.Builder()
-            .putString(AlarmOneTimeWorkManager.ALARM_TAG, serializeToJason(alarmPojo))
-            .build()
-
-        val constraints = Constraints.Builder()
-            .setRequiresBatteryNotLow(true)
-            .build()
-        val tag: String = alarmPojo.alarmTitle + alarmPojo.id
-        val oneTimeWorkRequest = OneTimeWorkRequest.Builder(
-            AlarmOneTimeWorkManager::class.java)
-            .setInputData(data)
-            .setConstraints(constraints)
-            .setInitialDelay(5, TimeUnit.MINUTES)
-            .addTag(tag)
-            .build()
-
-        WorkManager.getInstance(context)
-            .enqueueUniqueWork(tag, ExistingWorkPolicy.REPLACE, oneTimeWorkRequest)
-
-    }
-
-    private fun serializeToJason(pojo: AlarmPojo): String? {
-        val gson = Gson()
-        return gson.toJson(pojo)
-    }
-
-    private fun setPeriodicWorkManger() {
-        val constraints = Constraints.Builder()
-            .setRequiresBatteryNotLow(true)
-            .build()
-        val periodicWorkRequest = PeriodicWorkRequest.Builder(
-            MyPeriodicWorkManager::class.java,
-            3, TimeUnit.HOURS
-        )
-            .setInitialDelay(2, TimeUnit.MINUTES)
-            .setConstraints(constraints)
-            .build()
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-            "Counter",
-            ExistingPeriodicWorkPolicy.REPLACE,
-            periodicWorkRequest
-        )
     }
 
     private fun close() {
@@ -162,9 +102,5 @@ class AlarmWindow(
         } catch (e: Exception) {
             Log.d("sandra", e.toString())
         }
-    }
-
-    private fun stopMyService() {
-        context.stopService(Intent(context, AlarmReminderService::class.java))
     }
 }

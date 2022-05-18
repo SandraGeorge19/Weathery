@@ -86,7 +86,7 @@ dependencies {
 
     //WorkManager
     //val work_version = "2.7.1"
-    implementation "androidx.work:work-runtime-ktx:2.7.1"
+    implementation "androidx.work:work-runtime-ktx:2.0.1"
 
     //Single RXJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
