@@ -1,6 +1,5 @@
 package iti.mad42.weathery.favoriteweatherdetails.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

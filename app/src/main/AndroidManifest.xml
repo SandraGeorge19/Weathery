@@ -24,10 +24,10 @@
             android:name=".favoriteweatherdetails.view.FavoriteWeatherDetailsActivity"
             android:exported="true" />
 
-        <service
-            android:name=".workmanager.alarmreminder.AlarmReminderService"
-            android:enabled="true"
-            android:exported="true" />
+<!--        <service-->
+<!--            android:name=".workmanager.alarmreminder.AlarmReminderService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true" />-->
 
         <receiver
             android:name=".broadcast.NetworkChangeReceiver"

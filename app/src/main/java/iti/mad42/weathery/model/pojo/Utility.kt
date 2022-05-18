@@ -25,7 +25,25 @@ class Utility {
         val METRIC = "metric"
         val ERROR_DIALOG_REQUEST = 5555
 
-        val ALERT_TYPE_ARRAY = arrayOf("Rain", "Snow", "Cloud", "Wind", "Thunder Storm","Mist / Fog","Fire warning")
+        val ALERT_TYPE_ARRAY = arrayOf(
+            "Rain",
+            "Snow",
+            "Cloud",
+            "Wind",
+            "Thunder Storm",
+            "Mist / Fog",
+            "Fire warning"
+        )
+
+        val ALERT_TYPE_ARRAY_ARABIC = arrayOf(
+            "مطر",
+            "ثلوج",
+            "سحب",
+            "رياح",
+            "عاصفة ترابية",
+            "ضباب",
+            "حرارة"
+        )
 
         fun timeStampToDate (dt : Long) : String{
             var date : Date = Date(dt * 1000)
@@ -77,6 +95,14 @@ class Utility {
             editor.apply()
         }
 
+        fun saveOverlayPermission(context: Context ,key : String, value : Boolean){
+            var editor : SharedPreferences.Editor = context.getSharedPreferences("overlay",
+                AppCompatActivity.MODE_PRIVATE
+            ).edit()
+            editor.putBoolean(key, value)
+            editor.apply()
+        }
+
         fun saveLanguageToSharedPref(context: Context, key : String, value : String){
             var editor : SharedPreferences.Editor = context.getSharedPreferences("Language",
                 AppCompatActivity.MODE_PRIVATE
@@ -92,7 +118,9 @@ class Utility {
             editor.putString(key, value)
             editor.apply()
         }
-
+        fun timeToSeconds(hour: Int, min: Int): Long {
+            return (((hour * 60 + min) * 60) - 7200 ).toLong()
+        }
 
     }
 }

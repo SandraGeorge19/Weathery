@@ -36,6 +36,10 @@ class Repository private constructor(
     override val getWeatherPojo: LiveData<WeatherPojo>
         get() = localDataSource.getWeatherPojo
 
+    override suspend fun getStoredWeather(): WeatherPojo {
+        return localDataSource.getStoredWeather()
+    }
+
     override fun insertCurrentWeather(weatherPojo: WeatherPojo) {
         localDataSource.insertCurrentWeather(weatherPojo)
     }

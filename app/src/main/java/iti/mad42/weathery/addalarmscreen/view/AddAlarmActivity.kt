@@ -16,7 +16,6 @@ import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
-import iti.mad42.weathery.R
 import iti.mad42.weathery.addalarmscreen.viewmodel.AddAlarmViewModel
 import iti.mad42.weathery.addalarmscreen.viewmodel.AddAlarmViewModelFactory
 import iti.mad42.weathery.databinding.ActivityAddAlarmBinding
@@ -178,6 +177,7 @@ class AddAlarmActivity : AppCompatActivity() {
             { viewTimePicker, hour, minute ->
                 alarmHour = hour
                 alarmMinute = minute
+                Log.e("sandra", "openTimePicker: hour $alarmHour min : $alarmMinute", )
                 myAlarm.alarmTime = Utility.timeToMillis(hour, minute)
                 alarmTime = myAlarm.alarmTime
                 Log.e("sandra", "openTimePicker: alarm Time is:  ${myAlarm.alarmTime}")
@@ -191,16 +191,14 @@ class AddAlarmActivity : AppCompatActivity() {
         val constraints = Constraints.Builder()
             .setRequiresBatteryNotLow(true)
             .build()
+
         val periodicWorkRequest = PeriodicWorkRequest.Builder(
-            MyPeriodicWorkManager::class.java,
-            15, TimeUnit.MINUTES
-        )
+            MyPeriodicWorkManager::class.java, 24, TimeUnit.HOURS)
             .setConstraints(constraints)
             .build()
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-            "Counter",
-            ExistingPeriodicWorkPolicy.REPLACE,
-            periodicWorkRequest
-        )
+
+        WorkManager.getInstance().enqueueUniquePeriodicWork(
+            "MyWorkManager", ExistingPeriodicWorkPolicy.REPLACE, periodicWorkRequest)
+        Log.e("Create alarm","setPeriodWorkManger")
     }
 }

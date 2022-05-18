@@ -15,49 +15,42 @@ import iti.mad42.weathery.model.db.ConcreteLocalDataSource
 import iti.mad42.weathery.model.network.RemoteDataSource
 import iti.mad42.weathery.model.pojo.*
 import iti.mad42.weathery.workmanager.alarmreminder.AlarmOneTimeWorkManager
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 class MyPeriodicWorkManager(
     context: Context,
     workerParams: WorkerParameters,
-    repository : RepositoryInterface = Repository.getInstance(RemoteDataSource.getInstance(), ConcreteLocalDataSource(context), context)
-) :
-    Worker(context, workerParams) {
+) : CoroutineWorker(context, workerParams) {
 
     var delay : Long = 0
     var timeNow : Long = 0
     var context = context
-    var repo : RepositoryInterface = repository
-    var alertsList : List<AlarmPojo?>? = null
-    var alertsSingleList : Single<List<AlarmPojo>>? = null
+    var repo : RepositoryInterface = Repository.getInstance(RemoteDataSource.getInstance(), ConcreteLocalDataSource(context), context)
+    var alertsList : List<AlarmPojo?> = listOf()
 
     @NonNull
     @Override
-    override fun doWork(): Result {
-        alertsSingleList = repo.allAlarmsList
-        Log.e("sandra", "doWork: alertList ${alertsSingleList}", )
+    override suspend fun doWork(): Result {
+        repo.allAlarmsList
         subscribeOnSingleForAlertReminder()
         getTimePeriod()
         getCurrentAlarms()
         return Result.success()
     }
 
+    @DelicateCoroutinesApi
     fun subscribeOnSingleForAlertReminder(){
-        alertsSingleList?.subscribe(object : SingleObserver<List<AlarmPojo?>>{
-            override fun onSubscribe(d: Disposable) {
 
+        GlobalScope.launch(Dispatchers.IO) {
+            repo.allAlarmsList?.subscribe { alerts->
+                alertsList =alerts
             }
-
-            override fun onSuccess(t: List<AlarmPojo?>) {
-                alertsList = t
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }
     }
 
     fun getTimePeriod(){
@@ -71,44 +64,46 @@ class MyPeriodicWorkManager(
 
     fun checkPeriod(alarmTime : Long) : Boolean{
         delay = alarmTime - timeNow
+        Log.e("sandra", "getCurrentAlarms: delay : $delay", )
         if(delay > 0){
             return true
         }
         return false
     }
 
-    private fun setOnTimeWorkManger(time: Long, alarmPojo: AlarmPojo) {
-        Log.e("sandra", "setOnTimeWorkManger: " + alarmPojo.alarmTitle + time)
+    private fun setOnTimeWorkManger(time: Long, desc : String) {
         val data = Data.Builder()
-            .putString(AlarmOneTimeWorkManager.ALARM_TAG, serializeToJason(alarmPojo))
+            .putString(AlarmOneTimeWorkManager.ALARM_TAG, desc)
             .build()
         val constraints = Constraints.Builder()
             .setRequiresBatteryNotLow(true)
             .build()
-        val tag: String = alarmPojo.alarmTitle + alarmPojo.alarmTime.toString()
+        val tag: String = desc + ""
         val oneTimeWorkRequest =
             OneTimeWorkRequest.Builder(AlarmOneTimeWorkManager::class.java).setInputData(data)
                 .setConstraints(constraints)
                 .setInitialDelay(time, TimeUnit.MILLISECONDS)
                 .addTag(tag)
                 .build()
-        WorkManager.getInstance(context)
+        WorkManager.getInstance()
             .enqueueUniqueWork(tag, ExistingWorkPolicy.REPLACE, oneTimeWorkRequest)
     }
 
-    private fun serializeToJason(pojo: AlarmPojo): String? {
-        val gson = Gson()
-        return gson.toJson(pojo)
-    }
-
-
     @SuppressLint("NewApi")
-    fun getCurrentAlarms(){
+     suspend fun getCurrentAlarms(){
+        var currentWeather : WeatherPojo = repo.getStoredWeather()
         if(alertsList != null){
             for (alert in alertsList!!) {
                 if (alert?.alarmDays?.stream()?.anyMatch { s -> s.contains(Utility.getCurrentDay()) } == true) {
                     if (checkPeriod(alert.alarmTime)) {
-                        setOnTimeWorkManger(delay, alert)
+                        //setOnTimeWorkManger(delay, alert)
+                        if(currentWeather.alerts.isNullOrEmpty()){
+                            Log.e("sandra", "getCurrentAlarms: is", )
+                            setOnTimeWorkManger(delay, currentWeather.current.weather[0].description)
+
+                        }else{
+                            setOnTimeWorkManger(delay, currentWeather.alerts!![0].description)
+                        }
                     }
                 }
             }
