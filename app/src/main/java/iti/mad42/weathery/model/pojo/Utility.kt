@@ -19,6 +19,7 @@ class Utility {
         val Language_EN_Value : String = "en"
         val Language_AR_Value : String = "ar"
         val Language_Key : String = "Lang"
+        val Language_Value_Key = "Language"
         val TEMP_KEY = "Temp"
         val IMPERIAL = "imperial"
         val STANDARD = "standard"
@@ -120,6 +121,22 @@ class Utility {
         }
         fun timeToSeconds(hour: Int, min: Int): Long {
             return (((hour * 60 + min) * 60) - 7200 ).toLong()
+        }
+
+        fun saveFirstTimeEnterAppSharedPref(context: Context, key : String, value : Boolean){
+            var editor : SharedPreferences.Editor = context.getSharedPreferences("first",
+                AppCompatActivity.MODE_PRIVATE
+            ).edit()
+            editor.putBoolean(key, value)
+            editor.apply()
+        }
+
+        fun saveIsMapSharedPref(context: Context, key : String, value : Boolean){
+            var editor : SharedPreferences.Editor = context.getSharedPreferences("isMap",
+                AppCompatActivity.MODE_PRIVATE
+            ).edit()
+            editor.putBoolean(key, value)
+            editor.apply()
         }
 
     }

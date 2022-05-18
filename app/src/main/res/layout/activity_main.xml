@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/homeScreenConstraint"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
@@ -14,73 +15,15 @@
         app:layout_constraintBottom_toTopOf="@id/bubbleNavigationBar"
         />
 
-    <com.gauravk.bubblenavigation.BubbleNavigationLinearView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bubbleNavigationBar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:background="#070723"
-        android:orientation="horizontal"
-        android:elevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
-        >
-
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/homeToggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:bt_active="true"
-            app:bt_colorActive="#ffffff"
-            app:bt_colorInactive="#5A5A5A"
-            app:bt_shape="@drawable/transition_home"
-            app:bt_icon="@drawable/cloud"
-            app:bt_title="@string/home_txt"
-            android:fontFamily="@font/merriweathersans_italic"
-            />
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/favToggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:bt_active="true"
-            app:bt_colorActive="#ffffff"
-            app:bt_colorInactive="#5A5A5A"
-            app:bt_shape="@drawable/transition_home"
-            android:layout_marginLeft="32dp"
-            app:bt_icon="@drawable/favorite"
-            app:bt_title="@string/favorites_txt"
-            android:fontFamily="@font/merriweathersans_bold"
-            />
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/alarmToggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:bt_active="true"
-            app:bt_colorActive="#ffffff"
-            app:bt_colorInactive="#5A5A5A"
-            app:bt_shape="@drawable/transition_home"
-            android:layout_marginLeft="32dp"
-            app:bt_icon="@drawable/alarm"
-            app:bt_title="@string/alarms_txt"
-            android:fontFamily="@font/merriweathersans_bold"
-            />
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/settingToggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            app:bt_active="true"
-            app:bt_colorActive="#ffffff"
-            app:bt_colorInactive="#5A5A5A"
-            app:bt_icon="@drawable/setting"
-            app:bt_shape="@drawable/transition_home"
-            app:bt_title="@string/setting_txt"
-            android:fontFamily="@font/merriweathersans_bold"
-            />
-    </com.gauravk.bubblenavigation.BubbleNavigationLinearView>
-
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        android:background="@color/secondary_main_color"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

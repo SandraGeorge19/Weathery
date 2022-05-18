@@ -60,12 +60,21 @@ class MapActivity : AppCompatActivity() , OnMapReadyCallback, OnClickConfirmAddT
             favMap.addMarker(markerOptions)
             favMap.animateCamera(CameraUpdateFactory.newLatLng(it))
             Log.e("sandra", "onMapReady: lat is ${it.latitude} and long is ${it.longitude}", )
+            if(isMapFromSharedPref()){
+                Utility.saveToSharedPref(this,"GPSLat", it.latitude)
+                Utility.saveToSharedPref(this,"GPSLong", it.longitude)
+            }
             favPlace = FavoriteWeather(getAddressAndDateForLocation(it.latitude,it.longitude), it.latitude, it.longitude)
             onClickConfirmAddToFavBtn(favPlace)
         }
 
     }
 
+    private fun isMapFromSharedPref() : Boolean{
+        var isMapShared : SharedPreferences = getSharedPreferences("isMap", MODE_PRIVATE)
+        Log.e("sandra", "isMapFromSharedPref: ${isMapShared.getBoolean("isMap", false)}", )
+        return isMapShared.getBoolean("isMap", false)
+    }
 
     private fun initFavFactoryAndViewModel(){
         favPlaceFactory = FavoritesViewModelFactory(Repository.getInstance(RemoteDataSource.getInstance(), ConcreteLocalDataSource(this), this))

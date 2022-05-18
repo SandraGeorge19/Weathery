@@ -47,4 +47,26 @@
     <string name="disable_txt">مغلقة</string>
     <string name="weather_alert">منبه الطقس</string>
     <string name="dismiss_btn_txt">اغلاق</string>
+    <string name="initial_set_txt" >اعدادات مبدئية</string>
+    <string name="location_initial_txt">الموقع</string>
+    <string name="set_btn_txt">حدد</string>
+    <string name="permission_access_msg">من فضلك، قم بتفعيل خاصية الرسم على الشاشة</string>
+    <string name="permission_req_txt">طلب اذن</string>
+    <string name="ok_perm_txt">تم</string>
+    <string name="cancel_perm_txt">إغلاق</string>
+    <string name="no_internet_msg">لا يوجد انترنت، لاتستطيع ان ترى طقس هذه المنطقة</string>
+    <string name="delete_fav_msg">هل تريد ان تمسح هذة المنطقة من المفضلة؟</string>
+    <string name="delete_btn_txt">مسح</string>
+    <string name="confirm_delete_txt">تأكيد المسح</string>
+    <string name="refuse_goto_map_txt">لا تستطيع ان تفتح الخريطة!!</string>
+    <string name="no_internet_txt">لا يوجد اتصال بالانترنت!</string>
+    <string name="change_to_gps_txt">لقد قمت بتغيير الموقع الي الموقع الحالى</string>
+    <string name="change_to_map_txt">لقد قمت بتغيير الموقع الي الخريطة</string>
+    <string name="change_to_en_txt">لقد قمت بتغيير اللغة الى الانجليزية</string>
+    <string name="change_to_ar_txt">لقد قمت بتغيير اللغة الى العربية</string>
+    <string name="change_to_cel_txt">لقد قمت بتغيير درجة الحرارة الى السيليزية</string>
+    <string name="change_to_kelvin_txt">لقد قمت بتغيير درجة الحرارة الي الكلفن</string>
+    <string name="change_to_feh_txt">لقد قمت بتغيير درجة الحرارة الى الفهرنهايت</string>
+    <string name="choose_map_gps_msg">من فضلك قم باختيار واحد من الاختيارات</string>
+    <string name="alarm_noti">منبه الطقس</string>
 </resources>

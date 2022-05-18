@@ -16,7 +16,7 @@
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/drawable/transition_home.xml" value="0.16018518518518518" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/activity_add_alarm.xml" value="0.3579088471849866" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/activity_favorite_weather_details.xml" value="0.1" />
-        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/activity_main.xml" value="0.27807971014492755" />
+        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/activity_main.xml" value="0.25666666666666665" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/activity_map.xml" value="0.2" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/activity_splash_screen.xml" value="0.18" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/alarm_custom_cell.xml" value="0.20572916666666666" />
@@ -28,9 +28,11 @@
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/fragment_favorites.xml" value="0.25" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/fragment_home.xml" value="0.11153846153846154" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/fragment_setting.xml" value="0.25" />
+        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/initial_setting_dialog.xml" value="0.67" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/main_toolbar.xml" value="0.25" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/today_temp_by_hours_custom_cell.xml" value="0.20572916666666666" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/today_temp_hours_custom_cell.xml" value="0.20572916666666666" />
+        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/menu/bottom_nav_menu.xml" value="0.22395833333333334" />
       </map>
     </option>
   </component>
@@ -39,5 +41,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.25245901639344265" />
+      </ProjectState>
+    </option>
   </component>
 </project>

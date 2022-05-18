@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeToggle"
+        android:icon="@drawable/cloud"
+        android:title="@string/home_txt" />
+
+    <item
+        android:id="@+id/favToggle"
+        android:icon="@drawable/favorite"
+        android:title="@string/favorites_txt" />
+    <item
+        android:id="@+id/notificationsToggle"
+        android:icon="@drawable/alarm"
+        android:title="@string/alarm_txt" />
+    <item
+        android:id="@+id/settingsToggle"
+        android:icon="@drawable/setting"
+        android:title="@string/setting_txt" />
+
+</menu>

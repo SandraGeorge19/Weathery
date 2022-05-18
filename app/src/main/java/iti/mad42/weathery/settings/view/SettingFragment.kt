@@ -39,6 +39,7 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
+        changeMap()
         changeLanguage()
         changeTemp()
     }
@@ -57,19 +58,36 @@ class SettingFragment : Fragment() {
 
     }
 
+    private fun changeMap(){
+        binding.locationGroup.setOnCheckedChangeListener{ radioGroup, checkedButtonId ->
+            when{
+                checkedButtonId == binding.gpsRB.id -> {
+                    Utility.saveIsMapSharedPref(requireContext(), "isMap", false)
+                    Toast.makeText(requireContext(), getString(R.string.change_to_gps_txt), Toast.LENGTH_SHORT).show()
+                    refreshFragment()
+                }
+                checkedButtonId == binding.mapRB.id -> {
+                    Utility.saveIsMapSharedPref(requireContext(), "isMap", true)
+                    Toast.makeText(requireContext(), getString(R.string.change_to_map_txt), Toast.LENGTH_SHORT).show()
+                    refreshFragment()
+                }
+            }
+        }
+    }
+
     private fun changeLanguage(){
         binding.languageGroup.setOnCheckedChangeListener {radioGroup, checkedButtonId ->
             when{
                 checkedButtonId == binding.englishRB.id -> {
                     Utility.saveLanguageToSharedPref(requireContext(), Utility.Language_Key, Utility.Language_EN_Value)
                     LocaleManager.setLocale(requireContext())
-                    Toast.makeText(requireContext(), "You changed Language to English", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.change_to_en_txt), Toast.LENGTH_SHORT).show()
                     refreshFragment()
                 }
                 checkedButtonId == binding.arabicRB.id -> {
                     Utility.saveLanguageToSharedPref(requireContext(), Utility.Language_Key, Utility.Language_AR_Value)
                     LocaleManager.setLocale(requireContext())
-                    Toast.makeText(requireContext(), "You changed Language to Arabic", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.change_to_ar_txt), Toast.LENGTH_SHORT).show()
                     refreshFragment()
                 }
             }
@@ -83,17 +101,17 @@ class SettingFragment : Fragment() {
             when{
                 checkedButtonId == binding.celsiusRB.id ->{
                     Utility.saveTempToSharedPref(requireContext(), Utility.TEMP_KEY, Utility.METRIC)
-                    Toast.makeText(requireContext(), "You changed Temperature to Celsius", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.change_to_cel_txt), Toast.LENGTH_SHORT).show()
                     refreshFragment()
                 }
                 checkedButtonId == binding.kelvinRB.id ->{
                     Utility.saveTempToSharedPref(requireContext(), Utility.TEMP_KEY, Utility.STANDARD)
-                    Toast.makeText(requireContext(), "You changed Temperature to Kelvin", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.change_to_kelvin_txt), Toast.LENGTH_SHORT).show()
                     refreshFragment()
                 }
                 checkedButtonId == binding.fahrenheitRB.id ->{
                     Utility.saveTempToSharedPref(requireContext(), Utility.TEMP_KEY, Utility.IMPERIAL)
-                    Toast.makeText(requireContext(), "You changed Temperature to Fahrenheit", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.change_to_feh_txt), Toast.LENGTH_SHORT).show()
                     refreshFragment()
                 }
             }

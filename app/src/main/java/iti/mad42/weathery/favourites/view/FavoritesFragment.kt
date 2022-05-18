@@ -84,20 +84,20 @@ class FavoritesFragment : Fragment() , OnClickFavPlaceListener {
                     val favPlace = favoritesAdapter.favLocationList[viewHolder.adapterPosition]
 
                     var confirmDialog = AlertDialog.Builder(requireContext())
-                    confirmDialog.setMessage("Do you want to delete this location from favorites?")
+                    confirmDialog.setMessage(getString(R.string.delete_fav_msg))
                         .setCancelable(true)
-                        .setPositiveButton("Delete", DialogInterface.OnClickListener{
+                        .setPositiveButton(getString(R.string.delete_btn_txt), DialogInterface.OnClickListener{
                                 dialogInterface, i ->
                             favPlaceVM.deletePlaceFromFav(favPlace)
                         })
-                        .setNegativeButton("Cancel", DialogInterface.OnClickListener{
+                        .setNegativeButton(getString(R.string.cancel_perm_txt), DialogInterface.OnClickListener{
                                 dialogInterface, i ->
                             favoritesAdapter.notifyDataSetChanged()
                             dialogInterface.cancel()
 
                         })
                     val alert = confirmDialog.create()
-                    alert.setTitle("Confirm Deleting")
+                    alert.setTitle(getString(R.string.confirm_delete_txt))
                     alert.show()
                 }
 
@@ -140,7 +140,7 @@ class FavoritesFragment : Fragment() , OnClickFavPlaceListener {
                 var dialog : Dialog? = GoogleApiAvailability.getInstance().getErrorDialog(this, available, Utility.ERROR_DIALOG_REQUEST)
                 dialog?.show()
             }
-            else -> Toast.makeText(requireContext(), "You can't make map request !!", Toast.LENGTH_SHORT).show()
+            else -> Toast.makeText(requireContext(), getString(R.string.refuse_goto_map_txt), Toast.LENGTH_SHORT).show()
         }
         return false
 //        if(available == ConnectionResult.SUCCESS){

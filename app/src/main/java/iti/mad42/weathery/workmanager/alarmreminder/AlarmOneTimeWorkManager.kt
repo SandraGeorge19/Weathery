@@ -67,7 +67,7 @@ class AlarmOneTimeWorkManager(
         builder= Notification.Builder(applicationContext, "$CHANNEL_ID")
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentText(description)
-            .setContentTitle("Weather Alarm")
+            .setContentTitle(context.getString(R.string.alarm_noti))
             .setPriority(Notification.PRIORITY_DEFAULT)
             .setStyle(
                 Notification.BigTextStyle()

@@ -98,21 +98,23 @@ class AlarmFragment : Fragment() {
     fun checkPermission() : Boolean{
         var overlayShared : SharedPreferences = requireContext().getSharedPreferences("overlay", AppCompatActivity.MODE_PRIVATE)
         Log.e("sandra", "checkPermission: ${overlayShared.getBoolean("overlay", true)}", )
-        return overlayShared.getBoolean("overlay", false)
+        return overlayShared.getBoolean("overlay", true)
     }
 
     fun setPermissionGranted(){
-        Utility.saveOverlayPermission(requireContext(), "overlay", true)
+        Utility.saveOverlayPermission(requireContext(), "overlay", false)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun onClickOpenAddAlarm(){
-        checkDrawOverlayPermission()
+        //checkDrawOverlayPermission()
         if(checkPermission()){
+            Log.e("sandra", "after checkPerm: ", )
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 checkDrawOverlayPermission()
                 setPermissionGranted()
             } else {
+                Log.e("sandra", "after intent: ", )
                 val intent = Intent(requireContext(), AddAlarmActivity::class.java)
                 startActivity(intent)
             }
@@ -126,19 +128,18 @@ class AlarmFragment : Fragment() {
     private fun checkDrawOverlayPermission() {
         if (!Settings.canDrawOverlays(requireContext())) {
             val alertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
-            alertDialogBuilder.setTitle("Permission Requires")
+            alertDialogBuilder.setTitle(getString(R.string.permission_req_txt))
                 .setMessage(
-                            "Please Allow Overlay Permission")
-                .setPositiveButton("Ok") { dialog: DialogInterface, _: Int ->
+                            getString(R.string.permission_access_msg))
+                .setPositiveButton(getString(R.string.ok_perm_txt)) { dialog: DialogInterface, _: Int ->
                     val intent = Intent(
                         Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                         Uri.parse("package:" + requireContext().packageName)
                     )
                     dialog.dismiss()
                     startActivityForResult(intent, 1)
-
                 }.setNegativeButton(
-                    "Cancel"
+                    getString(R.string.cancel_perm_txt)
                 ) { dialog: DialogInterface, _: Int ->
                     dialog.dismiss()
                 }.show()
