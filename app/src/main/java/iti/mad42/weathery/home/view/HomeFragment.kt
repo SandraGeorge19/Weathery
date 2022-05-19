@@ -37,11 +37,10 @@ import kotlinx.coroutines.*
 import java.io.IOException
 import java.util.*
 import android.R
+import android.app.ProgressDialog
+import androidx.appcompat.app.AlertDialog
 
-
-
-
-
+@Suppress("DEPRECATION")
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var todayHoursAdapter : TodayTempHoursAdapter
@@ -53,7 +52,14 @@ class HomeFragment : Fragment() {
     var longitude : Double? = null
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var sharedPreferences : SharedPreferences
+    lateinit var isMapShared : SharedPreferences
+    lateinit var languageShared : SharedPreferences
+    lateinit var unitsShared : SharedPreferences
     lateinit var addressGeocoder : Geocoder
+    var isMap = false
+    lateinit var lang : String
+    lateinit var unit : String
+    lateinit var progressDialog: ProgressDialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,14 +79,32 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        getFreshLocation()
-         sharedPreferences = requireContext().getSharedPreferences("LatLong", Context.MODE_PRIVATE)
-        addressGeocoder = Geocoder(requireContext(), Locale.getDefault())
         initFactoryAndViewModel()
         initHoursRecycler()
         initWeekRecycler()
+        progressDialog = ProgressDialog(requireContext())
+        progressDialog.setTitle(getString(iti.mad42.weathery.R.string.loading_txt))
+        progressDialog.setMessage(getString(iti.mad42.weathery.R.string.loading_msg))
+        progressDialog.show()
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        addressGeocoder = Geocoder(requireContext(), Locale.getDefault())
+        sharedPreferences = requireContext().getSharedPreferences("LatLong", Context.MODE_PRIVATE)
+        isMapShared  = requireContext().getSharedPreferences("isMap", Context.MODE_PRIVATE)
+        languageShared = requireContext().getSharedPreferences("Language", Context.MODE_PRIVATE)
+        unitsShared =  requireContext().getSharedPreferences("Units", AppCompatActivity.MODE_PRIVATE)
+        isMap = isMapShared.getBoolean("isMap", false)
+        lang = languageShared.getString(Utility.Language_Key, "en")!!
+        unit = unitsShared.getString(Utility.TEMP_KEY,"metric")!!
+        Log.e("sandra", "onViewCreated: is Map : $isMap", )
+        if(isMap){
+            latitude = sharedPreferences.getFloat("GPSLat" , 0.0F).toDouble()
+            longitude = sharedPreferences.getFloat("GPSLong", 0.0F).toDouble()
+
+        }else{
+            getFreshLocation()
+        }
         getCurrentWeather()
+
     }
 
     fun initHoursRecycler(){
@@ -116,6 +140,7 @@ class HomeFragment : Fragment() {
                     updateUIWithWeatherData(it)
                 }
             }
+            progressDialog.dismiss()
         } else{
 
             homeViewModel.getLocalWeather().observe(requireActivity()){
@@ -130,8 +155,16 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        getFreshLocation()
-        getCurrentWeather()
+//        getFreshLocation()
+//        getCurrentWeather()
+        progressDialog = ProgressDialog(requireContext())
+        progressDialog.setTitle(getString(iti.mad42.weathery.R.string.loading_txt))
+        progressDialog.setMessage(getString(iti.mad42.weathery.R.string.loading_msg))
+        progressDialog.show()
+        CoroutineScope(Dispatchers.IO).launch {
+            delay(2000)
+            progressDialog.dismiss()
+        }
     }
 
     fun updateUIWithWeatherData(weatherPojo: WeatherPojo){
@@ -161,19 +194,68 @@ class HomeFragment : Fragment() {
 
         binding.homeDate.text = Utility.timeStampToDate(weatherPojo.current.dt)
         Log.i("Sandra", "getTodayTemp: ${weatherPojo.current.dt}")
-        binding.todayTempDegreeTxt.text = "${weatherPojo.current.temp.toInt().toString()} ℃"
-        binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
-//        if(weatherPojo.current.weather[0].description.value != null){
-//            binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description.name
-//        }else{
-//            binding.todayTempStatusTxt.text = "DDDDD"
-//        }
-        binding.pressureValueTxt.text = weatherPojo.current.pressure.toString()
-        binding.humidityValueTxt.text = "${weatherPojo.current.humidity} %"
-        binding.windValueTxt.text = weatherPojo.current.windSpeed.toString()
-        binding.cloudValueTxt.text = weatherPojo.current.clouds.toString()
-        binding.UVValueTxt.text = weatherPojo.current.uvi.toString()
-        binding.visibilityValueTxt.text = weatherPojo.current.visibility.toString()
+        if(lang == "en" && unit == "metric"){
+            binding.todayTempDegreeTxt.text = "${weatherPojo.current.temp.toInt()} ℃"
+            binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
+            binding.todayTempStatusIcon.setImageResource(Utility.getWeatherIcon(weatherPojo.current.weather[0].icon))
+            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())
+            binding.humidityValueTxt.text = "${Utility.convertNumbersToArabic(weatherPojo.current.humidity.toInt())} %"
+            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)
+            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())
+            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)
+            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())
+        }else if(lang == "ar" && unit == "metric"){
+            binding.todayTempDegreeTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.temp.toInt()) + " س°"
+            binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
+            binding.todayTempStatusIcon.setImageResource(Utility.getWeatherIcon(weatherPojo.current.weather[0].icon))
+            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())
+            binding.humidityValueTxt.text = "${Utility.convertNumbersToArabic(weatherPojo.current.humidity.toInt())} %"
+            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)
+            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())
+            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)
+            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())
+        }else if(lang == "en" && unit == "imperial"){
+            binding.todayTempDegreeTxt.text = "${weatherPojo.current.temp.toInt()} ℉"
+            binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
+            binding.todayTempStatusIcon.setImageResource(Utility.getWeatherIcon(weatherPojo.current.weather[0].icon))
+            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())
+            binding.humidityValueTxt.text = "${Utility.convertNumbersToArabic(weatherPojo.current.humidity.toInt())} %"
+            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)
+            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())
+            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)
+            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())
+        }else if(lang == "ar" && unit == "imperial"){
+            binding.todayTempDegreeTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.temp.toInt()) +"ف° "
+            binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
+            binding.todayTempStatusIcon.setImageResource(Utility.getWeatherIcon(weatherPojo.current.weather[0].icon))
+            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())
+            binding.humidityValueTxt.text = "${Utility.convertNumbersToArabic(weatherPojo.current.humidity.toInt())} %"
+            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)
+            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())
+            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)
+            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())
+        }else if(lang == "en" && unit == "standard"){
+            binding.todayTempDegreeTxt.text = "${weatherPojo.current.temp.toInt()} °K"
+            binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
+            binding.todayTempStatusIcon.setImageResource(Utility.getWeatherIcon(weatherPojo.current.weather[0].icon))
+            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())
+            binding.humidityValueTxt.text = "${Utility.convertNumbersToArabic(weatherPojo.current.humidity.toInt())} %"
+            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)
+            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())
+            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)
+            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())
+        }else if(lang == "ar" && unit == "standard"){
+            binding.todayTempDegreeTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.temp.toInt()) +"ك°"
+            binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
+            binding.todayTempStatusIcon.setImageResource(Utility.getWeatherIcon(weatherPojo.current.weather[0].icon))
+            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())
+            binding.humidityValueTxt.text = "${Utility.convertNumbersToArabic(weatherPojo.current.humidity.toInt())} %"
+            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)
+            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())
+            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)
+            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())
+        }
+
 
     }
 
@@ -255,6 +337,7 @@ class HomeFragment : Fragment() {
                 Utility.saveOverlayPermission(requireContext(), "overlay", false)
                 Utility.saveFirstTimeEnterAppSharedPref(requireContext(), "first", true)
             }
+            progressDialog.dismiss()
 
 //            Utility.saveLanguageToSharedPref(applicationContext, "Lang", "en")
 //            Utility.saveTempToSharedPref(applicationContext, "Temp", "metric")
