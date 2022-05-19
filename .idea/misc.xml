@@ -23,16 +23,17 @@
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/alarm_type_cell.xml" value="0.20572916666666666" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/alert_dialog.xml" value="0.1380952380952381" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/all_week_temp_custom_cell.xml" value="0.22" />
-        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/favoite_screen_custom_cell.xml" value="0.11507936507936507" />
+        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/favoite_screen_custom_cell.xml" value="0.25" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/fragment_alarm.xml" value="0.25" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/fragment_favorites.xml" value="0.25" />
-        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/fragment_home.xml" value="0.11153846153846154" />
+        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/fragment_setting.xml" value="0.25" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/initial_setting_dialog.xml" value="0.67" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/main_toolbar.xml" value="0.25" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/today_temp_by_hours_custom_cell.xml" value="0.20572916666666666" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/layout/today_temp_hours_custom_cell.xml" value="0.20572916666666666" />
         <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/menu/bottom_nav_menu.xml" value="0.22395833333333334" />
+        <entry key="..\:/1ITI/37Kotlin/Project/Weathery/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.23703703703703705" />
       </map>
     </option>
   </component>

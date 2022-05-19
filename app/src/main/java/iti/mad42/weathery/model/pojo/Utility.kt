@@ -3,6 +3,7 @@ package iti.mad42.weathery.model.pojo
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
+import iti.mad42.weathery.R
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -139,5 +140,51 @@ class Utility {
             editor.apply()
         }
 
+
+        fun getWeatherIcon(imageString: String): Int {
+            val imageInInteger: Int
+            when (imageString) {
+                "01d" -> imageInInteger = R.drawable.icon_01d
+                "01n" -> imageInInteger = R.drawable.icon_01n
+                "02d" -> imageInInteger = R.drawable.icon_02d
+                "02n" -> imageInInteger = R.drawable.icon_02n
+                "03n" -> imageInInteger = R.drawable.icon_03n
+                "03d" -> imageInInteger = R.drawable.icon_03d
+                "04d" -> imageInInteger = R.drawable.icon_04d
+                "04n" -> imageInInteger = R.drawable.icon_04n
+                "09d" -> imageInInteger = R.drawable.icon_09d
+                "09n" -> imageInInteger = R.drawable.icon_09n
+                "10d" -> imageInInteger = R.drawable.icon_10d
+                "10n" -> imageInInteger = R.drawable.icon_10n
+                "11d" -> imageInInteger = R.drawable.icon_11d
+                "11n" -> imageInInteger = R.drawable.icon_11n
+                "13d" -> imageInInteger = R.drawable.icon_13d
+                "13n" -> imageInInteger = R.drawable.icon_13n
+                "50d" -> imageInInteger = R.drawable.icon_50d
+                "50n" -> imageInInteger = R.drawable.icon_50n
+                else -> imageInInteger = R.drawable.cloud_icon
+            }
+            return imageInInteger
+        }
+
+        fun convertNumbersToArabic(value: Double): String {
+            return (value.toString() + "")
+                .replace("1".toRegex(), "١").replace("2".toRegex(), "٢")
+                .replace("3".toRegex(), "٣").replace("4".toRegex(), "٤")
+                .replace("5".toRegex(), "٥").replace("6".toRegex(), "٦")
+                .replace("7".toRegex(), "٧").replace("8".toRegex(), "٨")
+                .replace("9".toRegex(), "٩").replace("0".toRegex(), "٠")
+        }
+
+        fun convertNumbersToArabic(value: Int): String {
+            return (value.toString() + "")
+                .replace("1".toRegex(), "١").replace("2".toRegex(), "٢")
+                .replace("3".toRegex(), "٣").replace("4".toRegex(), "٤")
+                .replace("5".toRegex(), "٥").replace("6".toRegex(), "٦")
+                .replace("7".toRegex(), "٧").replace("8".toRegex(), "٨")
+                .replace("9".toRegex(), "٩").replace("0".toRegex(), "٠")
+        }
+
     }
+
 }

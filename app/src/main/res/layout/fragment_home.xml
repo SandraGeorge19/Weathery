@@ -59,7 +59,7 @@
                     android:layout_margin="12dp"
                     android:fontFamily="@font/merriweathersans_bold"
                     android:gravity="center"
-                    android:text="Maadi, Cairo"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +73,7 @@
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/merriweathersans_regular"
                     android:gravity="center"
-                    android:text="May 3, 2022"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -112,19 +112,44 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/todayTempDegreeTxt"
+                        <LinearLayout
+                            android:id="@+id/todayTempAllDeg"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="50dp"
-                            android:fontFamily="@font/merriweathersans_bold"
-                            android:gravity="center"
-                            android:text="23&#xb0; C"
-                            android:textColor="@color/white"
-                            android:textSize="50sp"
+                            android:orientation="horizontal"
                             app:layout_constraintEnd_toStartOf="@id/todayTempStatusIcon"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/todayTempStatusTxt"
+                            >
+                            <TextView
+                                android:id="@+id/todayTempDegreeTxt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="50dp"
+                                android:fontFamily="@font/merriweathersans_bold"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="50sp"
+                                app:layout_constraintEnd_toStartOf="@id/todayTempStatusIcon"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/todayTempPercTxt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="50dp"
+                                android:fontFamily="@font/merriweathersans_bold"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="50sp"
+                                app:layout_constraintEnd_toStartOf="@id/todayTempStatusIcon"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </LinearLayout>
 
                         <TextView
                             android:id="@+id/todayTempStatusTxt"
@@ -133,12 +158,12 @@
                             android:layout_marginTop="16dp"
                             android:fontFamily="@font/merriweathersans_regular"
                             android:gravity="center"
-                            android:text="Clear Sky"
+                            android:text=""
                             android:textColor="@color/white"
                             android:textSize="21sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/todayTempDegreeTxt" />
+                            app:layout_constraintTop_toBottomOf="@id/todayTempAllDeg" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 

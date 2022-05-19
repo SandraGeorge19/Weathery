@@ -69,4 +69,15 @@
     <string name="change_to_feh_txt">لقد قمت بتغيير درجة الحرارة الى الفهرنهايت</string>
     <string name="choose_map_gps_msg">من فضلك قم باختيار واحد من الاختيارات</string>
     <string name="alarm_noti">منبه الطقس</string>
+    <string name="add_fav_mgs">هل تريد اضافة هذه المنطقة للمفضلة؟</string>
+    <string name="save_btn">إضافة</string>
+    <string name="cancel_btn">إالغاء</string>
+    <string name="confirm_save_txt">تأكيد الاضافة</string>
+    <string name="loading_txt">تحميل</string>
+    <string name="loading_msg">جار تحميل البيانات، من فضلك انتظر</string>
+    <string name="cele"><![CDATA[&#xb0; س]]></string>
+    <string name="change_wind_txt">لقد قمت بتغيير سرعة الرياح الى م/ث</string>
+    <string name="change_wind_to_millis">لقد قمت بتغيير سرعة الرياح الى ميل/س</string>
+    <string name="enable_noti_msg">لقد قمت بإتاحة الاشعارات</string>
+    <string name="disable_noti_msg">لقد قمت بأغلاق الاشعارات</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.SharedPreferences
 import android.location.Address
 import android.location.Geocoder
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import iti.mad42.weathery.MainActivity
 import iti.mad42.weathery.R
 import iti.mad42.weathery.databinding.ActivityMapBinding
 import iti.mad42.weathery.favourites.viewmodel.FavoritesViewModel
@@ -37,11 +39,13 @@ class MapActivity : AppCompatActivity() , OnMapReadyCallback, OnClickConfirmAddT
     lateinit var favPlaceFactory: FavoritesViewModelFactory
     lateinit var favPlaceVM : FavoritesViewModel
     lateinit var favPlace: FavoriteWeather
+    var isFav : Boolean =false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        isFav = intent.getBooleanExtra("isFav", false)
         initFavFactoryAndViewModel()
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -61,6 +65,7 @@ class MapActivity : AppCompatActivity() , OnMapReadyCallback, OnClickConfirmAddT
             favMap.animateCamera(CameraUpdateFactory.newLatLng(it))
             Log.e("sandra", "onMapReady: lat is ${it.latitude} and long is ${it.longitude}", )
             if(isMapFromSharedPref()){
+                Log.e("san", "onMapReady: isMapFromSharedPref ${it.latitude}, ${it.longitude}", )
                 Utility.saveToSharedPref(this,"GPSLat", it.latitude)
                 Utility.saveToSharedPref(this,"GPSLong", it.longitude)
             }
@@ -100,21 +105,33 @@ class MapActivity : AppCompatActivity() , OnMapReadyCallback, OnClickConfirmAddT
     override fun onClickConfirmAddToFavBtn(favPlace: FavoriteWeather) {
         binding.saveFavBtn.setOnClickListener {
             var confirmDialog = AlertDialog.Builder(this)
-            confirmDialog.setMessage("Do you want to save this location to favorites?")
+            confirmDialog.setMessage(getString(R.string.add_fav_mgs))
                 .setCancelable(true)
-                .setPositiveButton("Save", DialogInterface.OnClickListener{
+                .setPositiveButton(getString(R.string.save_btn), DialogInterface.OnClickListener{
                     dialogInterface, i ->
-                        favPlaceVM.addPlaceToFav(favPlace)
-                        finish()
+                        if(isFav){
+                            favPlaceVM.addPlaceToFav(favPlace)
+                            finish()
+                        }else{
+                            Utility.saveIsMapSharedPref(this, "isMap", true)
+                            saveLatLongInSharedPref(favPlace.lat,favPlace.lon)
+                        }
                 })
-                .setNegativeButton("Cancel", DialogInterface.OnClickListener{
+                .setNegativeButton(getString(R.string.cancel_btn), DialogInterface.OnClickListener{
                     dialogInterface, i ->  dialogInterface.cancel()
                 })
             val alert = confirmDialog.create()
-            alert.setTitle("Confirm Saving")
+            alert.setTitle(getString(R.string.confirm_save_txt))
             alert.show()
 //            favPlaceVM.addPlaceToFav(favPlace)
 //            finish()
         }
+    }
+
+    fun saveLatLongInSharedPref(lat : Double, lon : Double){
+        Utility.saveToSharedPref(this,"GPSLat", lat)
+        Utility.saveToSharedPref(this,"GPSLong", lon)
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }

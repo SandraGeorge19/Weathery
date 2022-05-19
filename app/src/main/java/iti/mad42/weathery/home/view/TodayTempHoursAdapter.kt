@@ -1,6 +1,7 @@
 package iti.mad42.weathery.home.view
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.opengl.Visibility
 import android.os.Build
 import android.util.Log
@@ -22,6 +23,11 @@ class TodayTempHoursAdapter(
     var hoursList: List<CurrentWeather>,
     var context: Context?,
 ) : RecyclerView.Adapter<TodayTempHoursAdapter.ViewHolder>(){
+
+    var languageShared = context?.getSharedPreferences("Language", Context.MODE_PRIVATE)
+    var langu = languageShared?.getString(Utility.Language_Key, "en")!!
+    var unitsShared = context?.getSharedPreferences("Units", Context.MODE_PRIVATE)
+    var unit = unitsShared?.getString(Utility.TEMP_KEY,"metric")!!
 
     class ViewHolder(val binding: TodayTempHoursCustomCellBinding) : RecyclerView.ViewHolder(binding.root){
         init {
@@ -45,8 +51,22 @@ class TodayTempHoursAdapter(
     override fun onBindViewHolder(holder: TodayTempHoursAdapter.ViewHolder, position: Int) {
         with(holder){
             binding.hourTxt.text = Utility.timeStampToHour(hoursList[position].dt)
-            binding.hourTempDegreeTxt.text = "${hoursList[position].temp.toInt()} ℃"
-            binding.hourTempStatusIcon.setImageResource(R.drawable.clear_sky)
+
+            if(langu == "en" && unit == "metric"){
+                binding.hourTempDegreeTxt.text = "${hoursList[position].temp.toInt()} ℃"
+            }else if(langu == "ar" && unit == "metric"){
+                binding.hourTempDegreeTxt.text = Utility.convertNumbersToArabic(hoursList[position].temp.toInt()) + " س°"
+            }else if(langu == "en" && unit == "imperial"){
+                binding.hourTempDegreeTxt.text = "${hoursList[position].temp.toInt()} ℉"
+            }else if(langu == "ar" && unit == "imperial"){
+                binding.hourTempDegreeTxt.text = Utility.convertNumbersToArabic(hoursList[position].temp.toInt()) +"ف° "
+            }else if(langu == "en" && unit == "standard"){
+                binding.hourTempDegreeTxt.text = "${hoursList[position].temp.toInt()} °K"
+            }else if(langu == "ar" && unit == "standard"){
+                binding.hourTempDegreeTxt.text = Utility.convertNumbersToArabic(hoursList[position].temp.toInt()) +" ك° "
+            }
+
+            binding.hourTempStatusIcon.setImageResource(Utility.getWeatherIcon(hoursList[position].weather[0].icon))
             Log.i("san", "onBindViewHolder: ${Utility.timeStampToHourOneNumber(hoursList[position].dt)} and locale : ${LocalDateTime.now().hour.minus(12).toLong()}")
             if(LocalDateTime.now().hour > 12) {
                 if (Utility.timeStampToHourOneNumber(hoursList[position].dt) != LocalDateTime.now().hour.minus(12).toString()) {

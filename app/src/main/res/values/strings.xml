@@ -69,4 +69,15 @@
     <string name="change_to_feh_txt">You changed Temperature to Fahrenheit</string>
     <string name="choose_map_gps_msg">Please choose one of the choices</string>
     <string name="alarm_noti">Weather Alarm</string>
+    <string name="add_fav_mgs">Do you want to save this location to favorites?</string>
+    <string name="save_btn">Save</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="confirm_save_txt">Confirm Saving</string>
+    <string name="loading_txt">Loading</string>
+    <string name="loading_msg">Data is loading, Please wait</string>
+    <string name="cele"><![CDATA[&#xb0; C]]></string>
+    <string name="change_wind_txt">You changed Wind Speed to Meter/Sec</string>
+    <string name="change_wind_to_millis">You changed Wind Speed to Miles/Hour</string>
+    <string name="enable_noti_msg">You Enabled the Notifications</string>
+    <string name="disable_noti_msg">You Disabled the Notifications</string>
 </resources>

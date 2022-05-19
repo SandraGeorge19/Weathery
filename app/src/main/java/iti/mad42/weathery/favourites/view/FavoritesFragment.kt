@@ -151,7 +151,11 @@ class FavoritesFragment : Fragment() , OnClickFavPlaceListener {
     }
 
     fun goToMapActivity(){
-        binding.addFavBtn.setOnClickListener { startActivity(Intent(requireActivity(), MapActivity::class.java)) }
+        binding.addFavBtn.setOnClickListener {
+            var goToMap : Intent = Intent(requireActivity(), MapActivity::class.java)
+            goToMap.putExtra("isFav", true)
+            startActivity(goToMap)
+        }
     }
 
 }
