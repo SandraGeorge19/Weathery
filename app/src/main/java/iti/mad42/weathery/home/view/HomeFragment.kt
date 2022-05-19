@@ -192,8 +192,8 @@ class HomeFragment : Fragment() {
 
     fun getTodayTemp(weatherPojo: WeatherPojo){
 
+        //some updates
         binding.homeDate.text = Utility.timeStampToDate(weatherPojo.current.dt)
-        Log.i("Sandra", "getTodayTemp: ${weatherPojo.current.dt}")
         if(lang == "en" && unit == "metric"){
             binding.todayTempDegreeTxt.text = "${weatherPojo.current.temp.toInt()} ℃"
             binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
