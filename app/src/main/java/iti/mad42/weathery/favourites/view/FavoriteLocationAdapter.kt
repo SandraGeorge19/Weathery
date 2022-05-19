@@ -44,7 +44,6 @@ class FavoriteLocationAdapter(
                     Toast.makeText(context, context?.getString(R.string.no_internet_msg), Toast.LENGTH_SHORT).show()
                 }
             }
-            notifyDataSetChanged()
         }
     }
 
