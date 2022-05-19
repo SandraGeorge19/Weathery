@@ -192,68 +192,68 @@ class HomeFragment : Fragment() {
 
     fun getTodayTemp(weatherPojo: WeatherPojo){
 
+        //some updates
         binding.homeDate.text = Utility.timeStampToDate(weatherPojo.current.dt)
-        Log.i("Sandra", "getTodayTemp: ${weatherPojo.current.dt}")
         if(lang == "en" && unit == "metric"){
             binding.todayTempDegreeTxt.text = "${weatherPojo.current.temp.toInt()} ℃"
             binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
             binding.todayTempStatusIcon.setImageResource(Utility.getWeatherIcon(weatherPojo.current.weather[0].icon))
-            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())
+            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())+" hPa"
             binding.humidityValueTxt.text = "${Utility.convertNumbersToArabic(weatherPojo.current.humidity.toInt())} %"
-            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)
-            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())
-            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)
-            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())
+            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)+" m/s"
+            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())+ " m"
+            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)+ " %"
+            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())+ " %"
         }else if(lang == "ar" && unit == "metric"){
             binding.todayTempDegreeTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.temp.toInt()) + " س°"
             binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
             binding.todayTempStatusIcon.setImageResource(Utility.getWeatherIcon(weatherPojo.current.weather[0].icon))
-            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())
+            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())+ "هـ ب أ"
             binding.humidityValueTxt.text = "${Utility.convertNumbersToArabic(weatherPojo.current.humidity.toInt())} %"
-            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)
-            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())
-            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)
-            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())
+            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)+" م/ث "
+            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())+" م "
+            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)+ " %"
+            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())+ " %"
         }else if(lang == "en" && unit == "imperial"){
             binding.todayTempDegreeTxt.text = "${weatherPojo.current.temp.toInt()} ℉"
             binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
             binding.todayTempStatusIcon.setImageResource(Utility.getWeatherIcon(weatherPojo.current.weather[0].icon))
-            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())
+            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())+" hPa"
             binding.humidityValueTxt.text = "${Utility.convertNumbersToArabic(weatherPojo.current.humidity.toInt())} %"
-            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)
-            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())
-            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)
-            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())
+            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)+" km/h"
+            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())+ " km"
+            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)+ " %"
+            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())+ " %"
         }else if(lang == "ar" && unit == "imperial"){
             binding.todayTempDegreeTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.temp.toInt()) +"ف° "
             binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
             binding.todayTempStatusIcon.setImageResource(Utility.getWeatherIcon(weatherPojo.current.weather[0].icon))
-            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())
+            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())+ "هـ ب أ"
             binding.humidityValueTxt.text = "${Utility.convertNumbersToArabic(weatherPojo.current.humidity.toInt())} %"
-            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)
-            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())
-            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)
-            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())
+            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)+" كم/س "
+            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())+" كم "
+            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)+ " %"
+            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())+ " %"
         }else if(lang == "en" && unit == "standard"){
             binding.todayTempDegreeTxt.text = "${weatherPojo.current.temp.toInt()} °K"
             binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
             binding.todayTempStatusIcon.setImageResource(Utility.getWeatherIcon(weatherPojo.current.weather[0].icon))
-            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())
+            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())+ " hPa"
             binding.humidityValueTxt.text = "${Utility.convertNumbersToArabic(weatherPojo.current.humidity.toInt())} %"
-            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)
-            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())
-            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)
-            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())
+            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)+" m/s"
+            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())+ " m"
+            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)+ " %"
+            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())+ " %"
         }else if(lang == "ar" && unit == "standard"){
             binding.todayTempDegreeTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.temp.toInt()) +"ك°"
             binding.todayTempStatusTxt.text = weatherPojo.current.weather[0].description
             binding.todayTempStatusIcon.setImageResource(Utility.getWeatherIcon(weatherPojo.current.weather[0].icon))
-            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())
+            binding.pressureValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.pressure.toInt())+ "هـ ب أ"
             binding.humidityValueTxt.text = "${Utility.convertNumbersToArabic(weatherPojo.current.humidity.toInt())} %"
-            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed)
-            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())
-            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)
-            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())
+            binding.windValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.windSpeed) +" م/ث "
+            binding.cloudValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.clouds.toInt())+" م "
+            binding.UVValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.uvi)+ " %"
+            binding.visibilityValueTxt.text = Utility.convertNumbersToArabic(weatherPojo.current.visibility.toInt())+ " %"
         }
 
 
